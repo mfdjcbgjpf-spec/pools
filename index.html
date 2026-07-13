@@ -111,6 +111,16 @@
   <!-- ========================= HISTORY TAB =========================== -->
   <section class="tab-panel" id="tab-history">
     <div class="card">
+      <h2>Log a past coupon</h2>
+      <p class="hint">For coupons you already played before (or outside of) this app — paste your picks and their actual results together and it creates an already-graded ticket in one step. No need to rebuild the board first.</p>
+      <textarea id="log-past-input" rows="6" placeholder='{"game":"btts","coupon":"12 Jul 2026","stakeRs":150,"legs":[{"match_no":27,"fixture":"Malmo v IFK Goteborg","league":"Allsvenskan","P":0.773,"score":"4-0","btts":"NO","status":"FT"}, ...]}'></textarea>
+      <div class="btn-row">
+        <button id="log-past-btn" class="btn btn-primary">Log &amp; grade ticket</button>
+        <button id="log-past-template-btn" class="btn btn-ghost">Download template</button>
+        <span id="log-past-msg" class="msg"></span>
+      </div>
+    </div>
+    <div class="card">
       <h2>Saved tickets</h2>
       <p class="hint">Grade a pending ticket by pasting the results JSON once matches are FT. This feeds the calibration tables below — exactly like the failure log.</p>
       <div id="tickets-list"></div>
