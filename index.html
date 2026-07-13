@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Pools — BTTS &amp; Classic Pools Predictor</title>
+<meta name="description" content="Personal Poisson/Dixon-Coles predictor for Lottotech Goal Rush (BTTS) and Classic Pools.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <h1>⚽ Pools</h1>
+  <span class="subtitle">BTTS Goal Rush &amp; Classic Pools — Poisson / Dixon-Coles engine v3</span>
+</header>
+
+<nav class="tabbar" id="tabbar">
+  <button class="tab-btn active" data-tab="btts">Goal Rush (BTTS)</button>
+  <button class="tab-btn" data-tab="pools">Classic Pools</button>
+  <button class="tab-btn" data-tab="history">History &amp; Calibration</button>
+  <button class="tab-btn" data-tab="settings">Leagues &amp; Settings</button>
+  <button class="tab-btn" data-tab="backup">Backup</button>
+</nav>
+
+<main id="app">
+
+  <!-- =========================== BTTS TAB =========================== -->
+  <section class="tab-panel active" id="tab-btts">
+    <div class="card">
+      <h2>1 · Paste the board</h2>
+      <p class="hint">Paste the JSON fixture list you collected (Gemini template / manual research). Enter the <strong>full ~35-match board</strong> for an accurate scarcity read, not just your shortlist.</p>
+      <textarea id="btts-input" rows="8" placeholder='{"matches":[{"match_no":1,"fixture":"Home v Away","league":"Allsvenskan","n":18,"hgf":2.6,"hga":0.7,"agf":0.6,"aga":1.9,"runaway":0}, ...]}'></textarea>
+      <div class="btn-row">
+        <button id="btts-parse-btn" class="btn btn-primary">Add to board</button>
+        <button id="btts-clear-btn" class="btn btn-ghost">Clear board</button>
+        <button id="btts-template-btn" class="btn btn-ghost">Download fixture template</button>
+        <span id="btts-parse-msg" class="msg"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2 · Ranked recap table</h2>
+      <p class="hint">Every leg on the board, ranked by calibrated P(BTTS). <span class="tag-safe">green</span> = clears the 65% gate. <span class="tag-drop">red</span> = filter veto (dropped).</p>
+      <div id="btts-reward-read" class="reward-box"></div>
+      <div class="table-wrap"><table id="btts-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · League ranking</h2>
+      <p class="hint">Which leagues on this board carry the highest probability, aggregated across every fixture entered.</p>
+      <div class="table-wrap"><table id="btts-league-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <h2>4 · Build the slip (8 legs)</h2>
+      <p class="hint">Tick up to 8 legs. Auto-pick applies the discipline gate's own logic: top-ranked, capped at 3 legs per league.</p>
+      <div class="btn-row">
+        <button id="btts-autopick-btn" class="btn btn-primary">Auto-pick top 8</button>
+        <button id="btts-clearpick-btn" class="btn btn-ghost">Clear picks</button>
+      </div>
+      <div id="btts-slip-report" class="slip-report"></div>
+      <div class="btn-row">
+        <input type="text" id="btts-coupon-name" placeholder="Coupon label (e.g. 20-21 Jul)" class="text-input">
+        <input type="number" id="btts-stake" placeholder="Stake Rs" class="text-input num-input">
+        <button id="btts-save-ticket-btn" class="btn btn-primary">Save as ticket</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= POOLS TAB ============================ -->
+  <section class="tab-panel" id="tab-pools">
+    <div class="card">
+      <h2>1 · Paste the board</h2>
+      <p class="hint">Same fixture JSON format as BTTS — the underlying lambda engine is shared. Classic Pools ranks on P(1-1)+P(2-2), not BTTS.</p>
+      <textarea id="pools-input" rows="8" placeholder='{"matches":[{"match_no":1,"fixture":"Home v Away","league":"Norwegian OBOS-ligaen","n":15,"hgf":1.6,"hga":1.1,"agf":1.1,"aga":1.4,"runaway":0}, ...]}'></textarea>
+      <div class="btn-row">
+        <button id="pools-parse-btn" class="btn btn-primary">Add to board</button>
+        <button id="pools-clear-btn" class="btn btn-ghost">Clear board</button>
+        <button id="pools-template-btn" class="btn btn-ghost">Download fixture template</button>
+        <span id="pools-parse-msg" class="msg"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2 · Ranked recap table</h2>
+      <p class="hint">Ranked by score = P(1-1)+P(2-2). Filters: GAP (mismatch), XG (combined λ outside 2.0–2.6), 00 (0-0 risk), RUNAWAY.</p>
+      <div class="table-wrap"><table id="pools-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <h2>3 · League ranking</h2>
+      <div class="table-wrap"><table id="pools-league-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <h2>4 · Build the fiche</h2>
+      <p class="hint">Tick your legs (typical fiche: ~11 legs). Base rate is ~18% score draws per match — treat that as your floor.</p>
+      <div class="btn-row">
+        <button id="pools-autopick-btn" class="btn btn-primary">Auto-pick top 11</button>
+        <button id="pools-clearpick-btn" class="btn btn-ghost">Clear picks</button>
+      </div>
+      <div id="pools-slip-report" class="slip-report"></div>
+      <div class="btn-row">
+        <input type="text" id="pools-coupon-name" placeholder="Coupon label" class="text-input">
+        <input type="number" id="pools-stake" placeholder="Stake Rs" class="text-input num-input">
+        <button id="pools-save-ticket-btn" class="btn btn-primary">Save as ticket</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= HISTORY TAB =========================== -->
+  <section class="tab-panel" id="tab-history">
+    <div class="card">
+      <h2>Saved tickets</h2>
+      <p class="hint">Grade a pending ticket by pasting the results JSON once matches are FT. This feeds the calibration tables below — exactly like the failure log.</p>
+      <div id="tickets-list"></div>
+    </div>
+    <div class="card">
+      <h2>Calibration — predicted vs actual</h2>
+      <p class="hint">Across every graded leg: does a 70% call actually hit ~70% of the time? Needs volume (n≥30) to mean much.</p>
+      <div class="table-wrap"><table id="calibration-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>League track record</h2>
+      <p class="hint">Empirical hit rate per league from graded tickets, alongside the static prior — this is the real answer to "which league has the highest probability."</p>
+      <div class="table-wrap"><table id="league-track-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <!-- ========================= SETTINGS TAB =========================== -->
+  <section class="tab-panel" id="tab-settings">
+    <div class="card">
+      <h2>League base rates</h2>
+      <p class="hint">Priors swing ±40pts week to week — re-verify before trusting blindly. Edit in place; changes are saved automatically.</p>
+      <div class="table-wrap"><table id="leagues-table"><thead></thead><tbody></tbody></table></div>
+      <div class="btn-row">
+        <button id="league-add-btn" class="btn btn-primary">Add league</button>
+        <button id="league-reset-btn" class="btn btn-ghost">Reset to defaults</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Engine settings</h2>
+      <div id="settings-form" class="settings-grid"></div>
+      <div class="btn-row">
+        <button id="settings-reset-btn" class="btn btn-ghost">Reset to defaults</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Reference — payout economics</h2>
+      <div id="payout-reference"></div>
+    </div>
+
+    <div class="card">
+      <h2>Reference — Classic Pools scoring</h2>
+      <div id="pools-reference"></div>
+    </div>
+
+    <div class="card">
+      <h2>Data pipeline notes</h2>
+      <div id="pipeline-notes"></div>
+    </div>
+  </section>
+
+  <!-- ========================= BACKUP TAB =========================== -->
+  <section class="tab-panel" id="tab-backup">
+    <div class="card">
+      <h2>Backup &amp; sync</h2>
+      <p class="hint">Everything lives in this browser's local storage only — it does not sync automatically between your phone and other devices. Export a backup file after a session, and import it on the other device to keep them aligned.</p>
+      <div class="btn-row">
+        <button id="export-btn" class="btn btn-primary">Export backup (.json)</button>
+        <label class="btn btn-ghost file-btn">Import backup
+          <input type="file" id="import-input" accept="application/json" hidden>
+        </label>
+      </div>
+      <p id="backup-status" class="hint"></p>
+      <div class="btn-row">
+        <button id="reset-app-btn" class="btn btn-danger">Reset app (clear everything)</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>Engine v3 · runs entirely in your browser, nothing leaves your device.</span>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
