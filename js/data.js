@@ -116,8 +116,24 @@ const RESULTS_TEMPLATE = {
   ],
 };
 
+// Past-coupon backfill template — for coupons played before this app existed.
+// Each leg carries BOTH your original prediction (P) and the actual result,
+// so the ticket is created already-graded in one paste. league is optional
+// but recommended (feeds the league track record). P is your remembered/
+// recorded call at the time — if you don't have it, use your best estimate
+// or 0.65 as a neutral placeholder; it only affects the calibration table,
+// not the grading itself.
+const PAST_TICKET_TEMPLATE = {
+  game: "btts",
+  coupon: "12 Jul 2026",
+  stakeRs: 150,
+  legs: [
+    { match_no: 1, fixture: "Home Team v Away Team", league: "League name", P: 0.70, score: "2-1", btts: "YES", status: "FT" },
+  ],
+};
+
 export {
   DEFAULT_LEAGUES, DEFAULT_LEAGUE_FALLBACK, STRUCTURALLY_UNPLAYABLE,
   DEFAULT_SETTINGS, DISCIPLINE_GATE, PAYOUT_REFERENCE, CLASSIC_POOLS_REFERENCE,
-  REQUIRED_FIELDS_NOTE, FIXTURE_TEMPLATE, RESULTS_TEMPLATE,
+  REQUIRED_FIELDS_NOTE, FIXTURE_TEMPLATE, RESULTS_TEMPLATE, PAST_TICKET_TEMPLATE,
 };

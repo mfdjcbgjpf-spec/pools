@@ -8,7 +8,7 @@ import * as E from './engine.js';
 import {
   DEFAULT_LEAGUES, DEFAULT_LEAGUE_FALLBACK, STRUCTURALLY_UNPLAYABLE,
   DEFAULT_SETTINGS, PAYOUT_REFERENCE, CLASSIC_POOLS_REFERENCE,
-  REQUIRED_FIELDS_NOTE, FIXTURE_TEMPLATE, RESULTS_TEMPLATE,
+  REQUIRED_FIELDS_NOTE, FIXTURE_TEMPLATE, RESULTS_TEMPLATE, PAST_TICKET_TEMPLATE,
 } from './data.js';
 import {
   loadState, saveState, resetState, makeTicket, exportState, importStateFromText,
@@ -429,6 +429,55 @@ function wireTicketSave(prefix, mode) {
   });
 }
 
+function wireLogPastTicket() {
+  document.getElementById('log-past-btn').addEventListener('click', () => {
+    const text = document.getElementById('log-past-input').value.trim();
+    const msg = document.getElementById('log-past-msg');
+    if (!text) { msg.classList.add('error'); msg.textContent = 'Paste a coupon JSON first.'; return; }
+    try {
+      const payload = JSON.parse(text);
+      const game = payload.game === 'pools' ? 'pools' : 'btts';
+      const rawLegs = Array.isArray(payload.legs) ? payload.legs : [];
+      if (rawLegs.length === 0) throw new Error('No "legs" array found.');
+
+      const legs = rawLegs.map((l, idx) => ({
+        id: l.match_no != null ? `p_m${l.match_no}` : `p_${l.fixture}_${idx}`,
+        match_no: l.match_no ?? null,
+        fixture: l.fixture || 'Unknown fixture',
+        league: l.league || 'Unknown',
+        P: numOrNull(l.P) ?? (game === 'btts' ? 0.65 : 0.16),
+      }));
+
+      const slipStats = game === 'btts'
+        ? E.slipReport(legs.map(l => ({ name: l.fixture, P: l.P, league: l.league })), state.settings)
+        : E.poolsSlipReport(legs.map(l => ({ name: l.fixture, P: l.P })));
+
+      const ticket = makeTicket({
+        game, coupon: payload.coupon || '', stakeRs: numOrNull(payload.stakeRs), legs, slipStats,
+      });
+      state.tickets.unshift(ticket);
+
+      // Grade immediately using the same objects (they already carry score/btts/status).
+      gradeTicket(ticket.id, { results: rawLegs.map((l, idx) => ({ ...l, match_no: l.match_no ?? null, fixture: l.fixture || legs[idx].fixture })) });
+
+      save();
+      msg.classList.remove('error');
+      msg.textContent = `Logged and graded a ${legs.length}-leg ${game === 'btts' ? 'Goal Rush' : 'Classic Pools'} ticket.`;
+      document.getElementById('log-past-input').value = '';
+      renderTickets();
+      renderCalibration();
+      toast('Past coupon logged and graded.');
+    } catch (e) {
+      msg.classList.add('error');
+      msg.textContent = `Could not log: ${e.message}`;
+    }
+  });
+
+  document.getElementById('log-past-template-btn').addEventListener('click', () => {
+    downloadJSON(PAST_TICKET_TEMPLATE, 'past-coupon-template.json');
+  });
+}
+
 function ticketHeaderLine(t) {
   const d = new Date(t.created).toLocaleDateString();
   const gameLabel = t.game === 'btts' ? 'Goal Rush' : 'Classic Pools';
@@ -777,5 +826,6 @@ wireBoardInput('btts', 'bttsBoard', 'btts');
 wireBoardInput('pools', 'poolsBoard', 'pools');
 wireTicketSave('btts', 'btts');
 wireTicketSave('pools', 'pools');
+wireLogPastTicket();
 
 renderEverything();
