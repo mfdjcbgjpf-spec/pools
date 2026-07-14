@@ -1,6 +1,6 @@
 // ============================================================================
 // eurodata.js — loader for the football-data.co.uk / openfootball derived team
-// datasets. Three files are merged into one in-memory dataset:
+// datasets. Four files are merged into one in-memory dataset:
 //   euro_2025-26.json  — 22 major European leagues/divisions (football-data.co.uk)
 //   world_2025-26.json — MLS, Japan J1, China, Colombia, Argentina, Paraguay,
 //                        Ecuador, Brazil Serie A/B (openfootball match-by-match
@@ -8,15 +8,30 @@
 //   world2_2025-26.json — Austria (1st + 2nd tier), Kazakhstan, Mexico, Algeria,
 //                        Egypt, Morocco, Nigeria, South Africa, Australia
 //                        (openfootball football.json + world, same schema)
-// League codes are disjoint across all three files (2-letter+digit European
-// codes vs. 3-letter+digit world codes) so merging is a plain object spread —
-// no collisions, no risk of one file's league silently overwriting another's.
+//   international_2025-26.json — UEFA Champions League 2025/26 (CL1, venue-split),
+//                        Copa América 2024 / Gold Cup 2013 / AFCON 2025 / World
+//                        Cup 2022 & 2026 (COPA24/GOLD13/AFCON25/WC22/WC26 — all
+//                        neutral-venue tournaments, so h_* and a_* are set equal
+//                        per team: no real home advantage to encode), plus two
+//                        domestic gap-fills from openfootball/world (ISR1 Israel,
+//                        CRC1 Costa Rica, venue-split as usual). GOLD13 is built
+//                        from 2013 data (the repo has no 2015-2025 editions) —
+//                        its low BTTS rate pushes it into the low_avoid tier
+//                        automatically via mergeEuroLeaguesInto, and its display
+//                        name says "(stale...)" so it's visible wherever it's
+//                        listed. AFCON25/WC26 are group-stage-only (knockout
+//                        rounds weren't available/resolved in the source repos
+//                        as of build time) — also flagged in their names.
+// League codes are disjoint across all four files (2-letter+digit European
+// codes vs. 3-letter+digit world codes vs. named international codes) so
+// merging is a plain object spread — no collisions, no risk of one file's
+// league silently overwriting another's.
 //
-// A fourth file (euro_2024-26.json, two seasons pooled) ships alongside for
+// A fifth file (euro_2024-26.json, two seasons pooled) ships alongside for
 // reference/future use but is not wired into the UI yet.
 // ============================================================================
 
-const DATA_URLS = ['./data/euro_2025-26.json', './data/world_2025-26.json', './data/world2_2025-26.json'];
+const DATA_URLS = ['./data/euro_2025-26.json', './data/world_2025-26.json', './data/world2_2025-26.json', './data/international_2025-26.json'];
 
 let _cache = null; // resolved, merged dataset, once fetched
 let _loadingPromise = null;
