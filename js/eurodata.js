@@ -29,9 +29,15 @@
 //
 // A fifth file (euro_2024-26.json, two seasons pooled) ships alongside for
 // reference/future use but is not wired into the UI yet.
+//
+// calibration.json (added 14 Jul 2026): per-league BTTS delta overrides
+// produced by the weekly self-improvement job (scripts/self_improve.py).
+// Fetched alongside the four league files; missing/unreachable just means
+// every league keeps delta=0.00, same as before this existed.
 // ============================================================================
 
 const DATA_URLS = ['./data/euro_2025-26.json', './data/world_2025-26.json', './data/world2_2025-26.json', './data/international_2025-26.json'];
+const CALIBRATION_URL = './data/calibration.json';
 
 let _cache = null; // resolved, merged dataset, once fetched
 let _loadingPromise = null;
@@ -42,10 +48,31 @@ async function fetchOne(url) {
   return r.json();
 }
 
+/**
+ * Per-league calibration deltas produced by the weekly self-improvement job
+ * (scripts/self_improve.py). Missing/unreachable is not an error — an empty
+ * calibration table just means every league keeps delta=0.00, same as before
+ * this file existed.
+ */
+async function fetchCalibration() {
+  try {
+    const r = await fetch(CALIBRATION_URL);
+    if (!r.ok) return {};
+    const d = await r.json();
+    return (d && d.leagues) || {};
+  } catch (e) {
+    console.warn('EuroData: calibration.json not available — using delta=0.00 for all auto-merged leagues.', e);
+    return {};
+  }
+}
+
 async function loadEuroData() {
   if (_cache) return _cache;
   if (_loadingPromise) return _loadingPromise;
-  _loadingPromise = Promise.allSettled(DATA_URLS.map(fetchOne)).then(results => {
+  _loadingPromise = Promise.all([
+    Promise.allSettled(DATA_URLS.map(fetchOne)),
+    fetchCalibration(),
+  ]).then(([results, calibration]) => {
     const ok = results.filter(r => r.status === 'fulfilled').map(r => r.value);
     if (ok.length === 0) {
       _loadingPromise = null;
@@ -59,6 +86,7 @@ async function loadEuroData() {
       built: ok.map(d => d.built).filter(Boolean).sort().pop(),
       leagues: Object.assign({}, ...ok.map(d => d.leagues)),
       teams: Object.assign({}, ...ok.map(d => d.teams)),
+      calibration,
     };
     _cache = merged;
     return merged;
@@ -129,7 +157,8 @@ function buildFixtureFromTeams(data, code, homeTeamName, awayTeamName, matchNo) 
  * state.leagues). Never overwrites an existing key — so user edits and the
  * original niche-league table are always preserved.
  */
-function mergeEuroLeaguesInto(leaguesTable, data) {
+function mergeEuroLeaguesInto(leaguesTable, data, calibration) {
+  const cal = calibration || data.calibration || {};
   let added = 0;
   for (const [code, meta] of Object.entries(data.leagues)) {
     if (leaguesTable[meta.name]) continue; // don't clobber existing/edited entries
@@ -137,13 +166,15 @@ function mergeEuroLeaguesInto(leaguesTable, data) {
     let tier = 'mid';
     if (base >= 0.65) tier = 'high_core';
     else if (base < 0.52) tier = 'low_avoid';
+    const tuned = cal[code] && typeof cal[code].delta === 'number' ? cal[code].delta : 0.00;
+    const calNote = cal[code] ? ` | self-tuned delta=${tuned.toFixed(3)} (${cal[code].last_tuned || 'n/a'})` : '';
     leaguesTable[meta.name] = {
       base: round(base, 3),
       hg: meta.home_gf,
       ag: meta.away_gf,
-      delta: 0.00,
+      delta: tuned,
       tier,
-      note: `EuroData ${code} n=${meta.n} matches score-draw ${meta.score_draw}% 0-0 ${meta.nil_nil}%`,
+      note: `EuroData ${code} n=${meta.n} matches score-draw ${meta.score_draw}% 0-0 ${meta.nil_nil}%${calNote}`,
     };
     added++;
   }

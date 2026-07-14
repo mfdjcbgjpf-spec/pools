@@ -530,7 +530,7 @@ async function initEuroData() {
       if (sel) sel.innerHTML = optionsHtml;
       if (status) { status.classList.remove('error'); status.textContent = `${leagues.length} leagues, ${Object.values(data.teams).reduce((a, t) => a + Object.keys(t).length, 0)} teams loaded (2025-26 season).`; }
     }
-    const added = Euro.mergeEuroLeaguesInto(state.leagues, data);
+    const added = Euro.mergeEuroLeaguesInto(state.leagues, data, data.calibration);
     if (added > 0) {
       save();
       renderLeaguesTable();
