@@ -5,6 +5,7 @@
 // ============================================================================
 
 import * as E from './engine.js';
+import * as Euro from './eurodata.js';
 import {
   DEFAULT_LEAGUES, DEFAULT_LEAGUE_FALLBACK, STRUCTURALLY_UNPLAYABLE,
   DEFAULT_SETTINGS, PAYOUT_REFERENCE, CLASSIC_POOLS_REFERENCE,
@@ -17,6 +18,7 @@ import {
 let state = loadState();
 const picks = { btts: new Set(), pools: new Set() };
 let computedCache = { btts: [], pools: [] };
+let euroDataCache = null;
 
 function save() { saveState(state); }
 
@@ -400,6 +402,72 @@ function wireBoardInput(prefix, boardKey, mode) {
   document.getElementById(`${prefix}-template-btn`).addEventListener('click', () => {
     downloadJSON(FIXTURE_TEMPLATE, `fixture-template-${mode}.json`);
   });
+}
+
+// ----------------------------------------------------------------------
+// TEAM PICKER (EuroData quick-add)
+// ----------------------------------------------------------------------
+function wireTeamPicker(prefix, boardKey, mode) {
+  const leagueSel = document.getElementById(`${prefix}-tp-league`);
+  const homeSel = document.getElementById(`${prefix}-tp-home`);
+  const awaySel = document.getElementById(`${prefix}-tp-away`);
+  const addBtn = document.getElementById(`${prefix}-tp-add-btn`);
+  if (!leagueSel || !addBtn) return;
+
+  leagueSel.addEventListener('change', () => {
+    const code = leagueSel.value;
+    homeSel.innerHTML = '<option value="">Home team…</option>';
+    awaySel.innerHTML = '<option value="">Away team…</option>';
+    if (!code || !euroDataCache) return;
+    const teams = Euro.getTeamList(euroDataCache, code);
+    const opts = teams.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
+    homeSel.insertAdjacentHTML('beforeend', opts);
+    awaySel.insertAdjacentHTML('beforeend', opts);
+  });
+
+  addBtn.addEventListener('click', () => {
+    if (!euroDataCache) { toast('Team data still loading — try again in a moment.', true); return; }
+    const code = leagueSel.value, home = homeSel.value, away = awaySel.value;
+    if (!code || !home || !away) { toast('Pick a league, home team and away team first.', true); return; }
+    if (home === away) { toast('Home and away team must be different.', true); return; }
+    const board = state[boardKey];
+    const matchNo = board.length ? Math.max(0, ...board.map(m => m.match_no || 0)) + 1 : 1;
+    const fixture = Euro.buildFixtureFromTeams(euroDataCache, code, home, away, matchNo);
+    if (!fixture) { toast('Could not build that fixture — missing team data.', true); return; }
+    upsertBoard(board, [fixture]);
+    save();
+    renderAll(mode);
+    toast(`Added ${fixture.fixture} (${fixture.league}).`);
+  });
+}
+
+async function initEuroData() {
+  const prefixes = ['btts', 'pools'];
+  try {
+    const data = await Euro.loadEuroData();
+    euroDataCache = data;
+    const leagues = Euro.getLeagueList(data);
+    const optionsHtml = '<option value="">League…</option>'
+      + leagues.map(l => `<option value="${esc(l.code)}">${esc(l.name)}</option>`).join('');
+    for (const prefix of prefixes) {
+      const sel = document.getElementById(`${prefix}-tp-league`);
+      const status = document.getElementById(`${prefix}-tp-status`);
+      if (sel) sel.innerHTML = optionsHtml;
+      if (status) { status.classList.remove('error'); status.textContent = `${leagues.length} leagues, ${Object.values(data.teams).reduce((a, t) => a + Object.keys(t).length, 0)} teams loaded (2025-26 season).`; }
+    }
+    const added = Euro.mergeEuroLeaguesInto(state.leagues, data);
+    if (added > 0) {
+      save();
+      renderLeaguesTable();
+      renderAll();
+    }
+  } catch (e) {
+    console.error('EuroData load failed', e);
+    for (const prefix of prefixes) {
+      const status = document.getElementById(`${prefix}-tp-status`);
+      if (status) { status.classList.add('error'); status.textContent = 'Could not load team data — the paste box below still works normally.'; }
+    }
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -827,5 +895,8 @@ wireBoardInput('pools', 'poolsBoard', 'pools');
 wireTicketSave('btts', 'btts');
 wireTicketSave('pools', 'pools');
 wireLogPastTicket();
+wireTeamPicker('btts', 'bttsBoard', 'btts');
+wireTeamPicker('pools', 'poolsBoard', 'pools');
 
 renderEverything();
+initEuroData();
