@@ -192,6 +192,20 @@ tr.row-caution td:first-child { border-left: 3px solid var(--amber); }
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+.nogo-banner {
+  border: 1px solid var(--red);
+  background: rgba(255,92,92,0.10);
+  color: var(--red);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.nogo-banner .nogo-sub { font-weight: 400; color: var(--text); display: block; margin-top: 4px; }
+.nogo-banner.hidden { display: none; }
+
 @media (min-width: 700px) {
   .tabbar { top: 66px; }
   main { padding: 16px; }
