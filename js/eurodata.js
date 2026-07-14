@@ -219,6 +219,17 @@ const GENERIC_CLUB_WORDS = new Set([
   // Ecuador, Peru, Colombia, Venezuela, Bolivia), same failure mode as
   // "Atletico"/"Deportivo"/"Real"/"Sporting" above.
   'universidad',
+  // Found via a real mismatch: pasting Lottotech's Classic Pools fixture list
+  // (49 Australian NPL/state-league/youth fixtures, 14 Jul 2026) silently
+  // matched "Ipswich FC" (Queensland) to "Ipswich" (England League One) and
+  // "Newcastle Olympic" / "Belmont Swansea" (both NSW amateur clubs) to
+  // "Newcastle" and "Swansea" (English/Welsh EFL clubs) -- city names that are
+  // also English/Welsh club names recur as Australian state-league club
+  // prefixes/suffixes constantly (Ipswich, Newcastle, Swansea and likely
+  // others not yet hit). These specific city-name collisions are exactly why
+  // Australian NPL is on the STRUCTURALLY_UNPLAYABLE list in data.js already --
+  // this closes one more silent-false-positive path into it.
+  'ipswich', 'newcastle', 'swansea',
 ]);
 
 /**
