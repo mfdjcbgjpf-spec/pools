@@ -27,6 +27,18 @@
   <!-- =========================== BTTS TAB =========================== -->
   <section class="tab-panel active" id="tab-btts">
     <div class="card">
+      <h2>Quick-add from team stats</h2>
+      <p class="hint">22 major European leagues/divisions, real venue-split stats (2025-26 season). Pick a league and two teams — no manual data hunting needed. <span id="btts-tp-status" class="msg">Loading team data…</span></p>
+      <div class="btn-row">
+        <select id="btts-tp-league" class="text-input"><option value="">League…</option></select>
+        <select id="btts-tp-home" class="text-input"><option value="">Home team…</option></select>
+        <select id="btts-tp-away" class="text-input"><option value="">Away team…</option></select>
+        <button id="btts-tp-add-btn" class="btn btn-primary">Add fixture</button>
+      </div>
+      <p class="hint">Not one of these 22 leagues? Use the paste box below instead — it still works exactly the same for niche leagues.</p>
+    </div>
+
+    <div class="card">
       <h2>1 · Paste the board</h2>
       <p class="hint">Paste the JSON fixture list you collected (Gemini template / manual research). Enter the <strong>full ~35-match board</strong> for an accurate scarcity read, not just your shortlist.</p>
       <textarea id="btts-input" rows="8" placeholder='{"matches":[{"match_no":1,"fixture":"Home v Away","league":"Allsvenskan","n":18,"hgf":2.6,"hga":0.7,"agf":0.6,"aga":1.9,"runaway":0}, ...]}'></textarea>
@@ -69,6 +81,17 @@
 
   <!-- ========================= POOLS TAB ============================ -->
   <section class="tab-panel" id="tab-pools">
+    <div class="card">
+      <h2>Quick-add from team stats</h2>
+      <p class="hint">Same 22-league dataset as Goal Rush. Pick a league and two teams to auto-fill the fixture. <span id="pools-tp-status" class="msg">Loading team data…</span></p>
+      <div class="btn-row">
+        <select id="pools-tp-league" class="text-input"><option value="">League…</option></select>
+        <select id="pools-tp-home" class="text-input"><option value="">Home team…</option></select>
+        <select id="pools-tp-away" class="text-input"><option value="">Away team…</option></select>
+        <button id="pools-tp-add-btn" class="btn btn-primary">Add fixture</button>
+      </div>
+    </div>
+
     <div class="card">
       <h2>1 · Paste the board</h2>
       <p class="hint">Same fixture JSON format as BTTS — the underlying lambda engine is shared. Classic Pools ranks on P(1-1)+P(2-2), not BTTS.</p>
@@ -141,7 +164,7 @@
   <section class="tab-panel" id="tab-settings">
     <div class="card">
       <h2>League base rates</h2>
-      <p class="hint">Priors swing ±40pts week to week — re-verify before trusting blindly. Edit in place; changes are saved automatically.</p>
+      <p class="hint">Priors swing ±40pts week to week — re-verify before trusting blindly. Edit in place; changes are saved automatically. The 22 EuroData leagues merge in automatically alongside the original niche-league table below.</p>
       <div class="table-wrap"><table id="leagues-table"><thead></thead><tbody></tbody></table></div>
       <div class="btn-row">
         <button id="league-add-btn" class="btn btn-primary">Add league</button>
