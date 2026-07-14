@@ -113,6 +113,31 @@ function parseFixturesJSON(text) {
   return list.map((raw, idx) => normalizeMatch(raw, idx));
 }
 
+function parseFixtureTable(text) {
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const rows = [];
+  for (const line of lines) {
+    if (/^\|?\s*:?-+:?\s*\|/.test(line)) continue; // markdown separator row
+    let cells;
+    if (line.includes('|')) {
+      cells = line.split('|').map(c => c.trim());
+      if (cells[0] === '') cells.shift();
+      if (cells.length && cells[cells.length - 1] === '') cells.pop();
+    } else if (line.includes('\t')) {
+      cells = line.split('\t').map(c => c.trim());
+    } else {
+      cells = line.split(',').map(c => c.trim());
+    }
+    if (cells.length < 3) continue;
+    const [noRaw, home, away] = cells;
+    if (/match|no\.?$/i.test(noRaw) && /home/i.test(home || '')) continue; // header row
+    if (!home || !away) continue;
+    const match_no = parseInt(noRaw, 10);
+    rows.push({ match_no: Number.isFinite(match_no) ? match_no : null, home, away });
+  }
+  return rows;
+}
+
 function isComplete(m) {
   return [m.hgf, m.hga, m.agf, m.aga].every(v => v !== null && v !== undefined);
 }
@@ -438,6 +463,41 @@ function wireTeamPicker(prefix, boardKey, mode) {
     save();
     renderAll(mode);
     toast(`Added ${fixture.fixture} (${fixture.league}).`);
+  });
+}
+
+function wireQuickPasteNames(prefix, boardKey, mode) {
+  const btn = document.getElementById(`${prefix}-names-btn`);
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    if (!euroDataCache) { toast('Team data still loading — try again in a moment.', true); return; }
+    const input = document.getElementById(`${prefix}-names-input`);
+    const msg = document.getElementById(`${prefix}-names-msg`);
+    const text = input.value.trim();
+    if (!text) { msg.classList.add('error'); msg.textContent = 'Paste a fixture list first.'; return; }
+    const rows = parseFixtureTable(text);
+    if (rows.length === 0) {
+      msg.classList.add('error');
+      msg.textContent = 'Could not find any rows — expected "| No | Home | Away |" per line.';
+      return;
+    }
+    const { resolved, ambiguous, unresolved } = Euro.resolveFixtureList(euroDataCache, rows);
+    if (resolved.length) {
+      upsertBoard(state[boardKey], resolved);
+      save();
+      renderAll(mode);
+      input.value = '';
+    }
+    msg.classList.remove('error');
+    const parts = [`Matched ${resolved.length}/${rows.length} fixture(s) and added to the board.`];
+    if (ambiguous.length) {
+      parts.push(`${ambiguous.length} ambiguous (name matched 2+ teams) — add via the picker above instead: ${ambiguous.map(r => `${r.home} v ${r.away}`).join(', ')}.`);
+    }
+    if (unresolved.length) {
+      parts.push(`${unresolved.length} not in the 22-league dataset — use "Paste the board" below with their own stats: ${unresolved.map(r => `${r.home} v ${r.away}`).join(', ')}.`);
+    }
+    msg.textContent = parts.join(' ');
+    if (resolved.length) toast(`Auto-matched ${resolved.length} fixture(s) from pasted names.`);
   });
 }
 
@@ -897,6 +957,8 @@ wireTicketSave('pools', 'pools');
 wireLogPastTicket();
 wireTeamPicker('btts', 'bttsBoard', 'btts');
 wireTeamPicker('pools', 'poolsBoard', 'pools');
+wireQuickPasteNames('btts', 'bttsBoard', 'btts');
+wireQuickPasteNames('pools', 'poolsBoard', 'pools');
 
 renderEverything();
 initEuroData();
