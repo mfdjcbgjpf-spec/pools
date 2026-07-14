@@ -166,6 +166,13 @@ const GENERIC_CLUB_WORDS = new Set([
   // recur across multiple unrelated clubs within those countries (e.g. "Rapid Wien"
   // vs "Austria Wien"; "Rosario Central" vs "Central Coast Mariners").
   'austria', 'wien', 'stars', 'central',
+  // Found via a real mismatch: "Universidad Central" (Venezuela, not in the
+  // dataset) was silently matched to "Universidad Catolica" (Ecuador, an
+  // unrelated club) on the shared token "universidad" alone -- this prefix
+  // recurs across many unrelated Latin American university clubs (Chile,
+  // Ecuador, Peru, Colombia, Venezuela, Bolivia), same failure mode as
+  // "Atletico"/"Deportivo"/"Real"/"Sporting" above.
+  'universidad',
 ]);
 
 /**

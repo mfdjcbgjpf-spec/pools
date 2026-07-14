@@ -138,13 +138,31 @@ function parseFixtureTable(text) {
   return rows;
 }
 
+/** True if `name` matches (loosely) an entry on the structurally-unplayable list. */
+function isUnplayableLeague(name) {
+  const lower = String(name || '').toLowerCase();
+  return STRUCTURALLY_UNPLAYABLE.some(u => {
+    const uLower = u.toLowerCase();
+    return uLower === lower || uLower.includes(lower) || lower.includes(uLower);
+  });
+}
+
 function isComplete(m) {
   return [m.hgf, m.hga, m.agf, m.aga].every(v => v !== null && v !== undefined);
 }
 
 function upsertBoard(board, matches) {
   for (const m of matches) {
-    const i = board.findIndex(x => x.id === m.id);
+    // Match on id first (stable identity for a given team pairing), but also
+    // fall back to match_no: a new paste can reuse the same match number for
+    // a completely different fixture (different week's coupon), which builds
+    // a different id from different team names -- without this fallback that
+    // silently ADDS a duplicate row instead of replacing the old one, leaving
+    // stale fixtures from a prior paste mixed into the board indefinitely.
+    let i = board.findIndex(x => x.id === m.id);
+    if (i < 0 && m.match_no != null) {
+      i = board.findIndex(x => x.match_no === m.match_no);
+    }
     if (i >= 0) board[i] = m; else board.push(m);
   }
 }
@@ -362,11 +380,7 @@ function renderLeagueTable(tableId, valid, metricKey) {
   table.querySelector('tbody').innerHTML = rows.map(r => {
     const staticInfo = state.leagues[r.lg];
     const tier = staticInfo ? staticInfo.tier : 'unknown';
-    const lgLower = r.lg.toLowerCase();
-    const unplayable = STRUCTURALLY_UNPLAYABLE.some(u => {
-      const uLower = u.toLowerCase();
-      return uLower === lgLower || uLower.includes(lgLower) || lgLower.includes(uLower);
-    });
+    const unplayable = isUnplayableLeague(r.lg);
     return `<tr>
       <td>${esc(r.lg)}</td>
       <td>${r.n}</td>
@@ -482,6 +496,7 @@ function wireQuickPasteNames(prefix, boardKey, mode) {
       return;
     }
     const { resolved, ambiguous, unresolved } = Euro.resolveFixtureList(euroDataCache, rows);
+    showNogoAlert(prefix, rows, resolved, unresolved);
     if (resolved.length) {
       upsertBoard(state[boardKey], resolved);
       save();
@@ -858,6 +873,41 @@ function renderLeaguesTable() {
   });
 }
 
+// ----------------------------------------------------------------------
+// NO-GO LEAGUE WARNINGS — structurally-unplayable leagues (no reliable
+// dataset coverage) get a standing red reminder, plus a post-paste alert
+// when auto-match results look like they came from one of these anyway
+// (high unresolved ratio, or a resolved fixture's league is on the list).
+// ----------------------------------------------------------------------
+function renderNogoBanners() {
+  const list = STRUCTURALLY_UNPLAYABLE.map(l => esc(l)).join(', ');
+  for (const prefix of ['btts', 'pools']) {
+    const el = document.getElementById(`${prefix}-nogo-banner`);
+    if (!el) continue;
+    el.innerHTML = `⛔ No-go leagues — no reliable stats for these, don't trust auto-match here:
+      <span class="nogo-sub">${list}. If your coupon is from one of these (or looks like it — lower-tier/state/amateur leagues generally aren't covered), research stats manually and use "Paste the board" instead of auto-match.</span>`;
+  }
+}
+
+function showNogoAlert(prefix, rows, resolved, unresolved) {
+  const el = document.getElementById(`${prefix}-nogo-alert`);
+  if (!el) return;
+  const unresolvedRatio = rows.length ? unresolved.length / rows.length : 0;
+  const flaggedLeagues = [...new Set(resolved.filter(r => isUnplayableLeague(r.league)).map(r => r.league))];
+  const risky = unresolvedRatio >= 0.35 || flaggedLeagues.length > 0;
+  if (!risky) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+  const reasons = [];
+  if (unresolvedRatio >= 0.35) {
+    reasons.push(`${unresolved.length}/${rows.length} teams (${Math.round(unresolvedRatio * 100)}%) weren't found at all — that's a strong sign this whole board is from a league/competition outside the dataset (see the no-go list above), not just a few odd spellings.`);
+  }
+  if (flaggedLeagues.length) {
+    reasons.push(`${flaggedLeagues.length} resolved fixture(s) landed in a known no-go league: ${flaggedLeagues.map(esc).join(', ')}.`);
+  }
+  reasons.push(`Even the "matched" fixtures above may be false positives (e.g. a same-named club in a different country) — verify every team before trusting these stats.`);
+  el.classList.remove('hidden');
+  el.innerHTML = `⚠️ This board looks risky. <span class="nogo-sub">${reasons.join(' ')}</span>`;
+}
+
 function renderReferencePanels() {
   document.getElementById('payout-reference').innerHTML = `
     <div class="table-wrap"><table><thead><tr><th>Coupon tail</th><th>Tier</th><th>Payout</th></tr></thead>
@@ -948,6 +998,7 @@ function renderEverything() {
   renderLeaguesTable();
   renderSettingsForm();
   renderReferencePanels();
+  renderNogoBanners();
 }
 
 wireBoardInput('btts', 'bttsBoard', 'btts');
