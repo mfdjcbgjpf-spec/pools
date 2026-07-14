@@ -260,7 +260,7 @@ function buildFixtureFromMatches(data, homeMatch, awayMatch, matchNo) {
 /**
  * Resolve a raw fixture list -- [{match_no, home, away}] straight off a
  * pasted Lottotech coupon -- against the dataset. Every team is searched
- * independently across ALL 22 leagues (home and away need not share a
+ * independently across every league in the dataset (home and away need not share a
  * league -- pre-season friendlies routinely cross divisions/countries).
  *
  * Returns { resolved, ambiguous, unresolved }:
@@ -275,7 +275,7 @@ function resolveFixtureList(data, rows) {
     const h = findTeamAcrossLeagues(data, row.home);
     const a = findTeamAcrossLeagues(data, row.away);
     if (!h || !a) {
-      const reason = !h && !a ? 'neither team found in the 22-league dataset'
+      const reason = !h && !a ? 'neither team found in the dataset'
         : !h ? `"${row.home}" not found` : `"${row.away}" not found`;
       unresolved.push({ ...row, reason });
       continue;

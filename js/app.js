@@ -494,7 +494,7 @@ function wireQuickPasteNames(prefix, boardKey, mode) {
       parts.push(`${ambiguous.length} ambiguous (name matched 2+ teams) — add via the picker above instead: ${ambiguous.map(r => `${r.home} v ${r.away}`).join(', ')}.`);
     }
     if (unresolved.length) {
-      parts.push(`${unresolved.length} not in the 22-league dataset — use "Paste the board" below with their own stats: ${unresolved.map(r => `${r.home} v ${r.away}`).join(', ')}.`);
+      parts.push(`${unresolved.length} not in the dataset — use "Paste the board" below with their own stats: ${unresolved.map(r => `${r.home} v ${r.away}`).join(', ')}.`);
     }
     msg.textContent = parts.join(' ');
     if (resolved.length) toast(`Auto-matched ${resolved.length} fixture(s) from pasted names.`);
