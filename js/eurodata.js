@@ -1,19 +1,22 @@
 // ============================================================================
 // eurodata.js — loader for the football-data.co.uk / openfootball derived team
-// datasets. Two files are merged into one in-memory dataset:
+// datasets. Three files are merged into one in-memory dataset:
 //   euro_2025-26.json  — 22 major European leagues/divisions (football-data.co.uk)
 //   world_2025-26.json — MLS, Japan J1, China, Colombia, Argentina, Paraguay,
 //                        Ecuador, Brazil Serie A/B (openfootball match-by-match
 //                        results, aggregated here to the same venue-split schema)
-// League codes are disjoint across both files (2-letter+digit European codes
-// vs. 3-letter+digit world codes) so merging is a plain object spread — no
-// collisions, no risk of one file's league silently overwriting the other's.
+//   world2_2025-26.json — Austria (1st + 2nd tier), Kazakhstan, Mexico, Algeria,
+//                        Egypt, Morocco, Nigeria, South Africa, Australia
+//                        (openfootball football.json + world, same schema)
+// League codes are disjoint across all three files (2-letter+digit European
+// codes vs. 3-letter+digit world codes) so merging is a plain object spread —
+// no collisions, no risk of one file's league silently overwriting another's.
 //
-// A third file (euro_2024-26.json, two seasons pooled) ships alongside for
+// A fourth file (euro_2024-26.json, two seasons pooled) ships alongside for
 // reference/future use but is not wired into the UI yet.
 // ============================================================================
 
-const DATA_URLS = ['./data/euro_2025-26.json', './data/world_2025-26.json'];
+const DATA_URLS = ['./data/euro_2025-26.json', './data/world_2025-26.json', './data/world2_2025-26.json'];
 
 let _cache = null; // resolved, merged dataset, once fetched
 let _loadingPromise = null;
@@ -158,6 +161,11 @@ const GENERIC_CLUB_WORDS = new Set([
   'town', 'county', 'academical', 'academy',
   'atletico', 'deportivo', 'club', 'nacional', 'independiente', 'real', 'sporting',
   'racing', 'sport', 'union', 'national',
+  // Added when merging Austria/Kazakhstan/Mexico/Algeria/Egypt/Morocco/Nigeria/
+  // South Africa/Australia: place-name-as-club-prefix and descriptor words that
+  // recur across multiple unrelated clubs within those countries (e.g. "Rapid Wien"
+  // vs "Austria Wien"; "Rosario Central" vs "Central Coast Mariners").
+  'austria', 'wien', 'stars', 'central',
 ]);
 
 /**
@@ -267,7 +275,7 @@ function buildFixtureFromMatches(data, homeMatch, awayMatch, matchNo) {
  *   resolved   -- fixture objects ready to add to the board
  *   ambiguous  -- rows where a team name matched 2+ candidates equally well
  *   unresolved -- rows where a team wasn't found at all (commonly: a league
- *                outside the 22 covered here, e.g. Norway/Sweden/Brazil)
+ *                outside the dataset)
  */
 function resolveFixtureList(data, rows) {
   const resolved = [], ambiguous = [], unresolved = [];
