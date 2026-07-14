@@ -1,0 +1,993 @@
+{
+  "_meta": {
+    "schema": 1,
+    "last_run": "2026-07-14",
+    "run_count": 2
+  },
+  "runs": [
+    {
+      "date": "2026-07-14",
+      "leagues_checked": 49,
+      "teams_checked": 932,
+      "structural_flags": {
+        "ALG1": {
+          "name": "Algeria Ligue 1 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "ES Sétif",
+              "problems": [
+                "a_btts=33.3 exceeds a_sr=22.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Olympique Akbou",
+              "problems": [
+                "a_btts=55.6 exceeds a_sr=22.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "NC Magra",
+              "problems": [
+                "h_btts=55.6 exceeds h_sr=33.3 (BTTS requires this team to have scored)",
+                "a_btts=22.2 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Paradou AC",
+              "problems": [
+                "h_btts=55.6 exceeds h_sr=44.4 (BTTS requires this team to have scored)",
+                "a_btts=77.8 exceeds a_sr=22.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "ASO Chlef",
+              "problems": [
+                "a_btts=33.3 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "MC Oran",
+              "problems": [
+                "a_btts=44.4 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "JS Saoura",
+              "problems": [
+                "a_btts=44.4 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "JS Kabylie",
+              "problems": [
+                "a_btts=44.4 exceeds a_sr=22.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "CS Constantine",
+              "problems": [
+                "h_btts=55.6 exceeds h_sr=44.4 (BTTS requires this team to have scored)",
+                "a_btts=33.3 exceeds a_sr=22.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "ES Mostaganem",
+              "problems": [
+                "a_btts=33.3 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "USM Khenchela",
+              "problems": [
+                "a_btts=33.3 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "USM Alger",
+              "problems": [
+                "a_btts=22.2 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "US Biskra",
+              "problems": [
+                "h_btts=33.3 exceeds h_sr=11.1 (BTTS requires this team to have scored)",
+                "a_btts=33.3 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "ARG1": {
+          "name": "Argentina Primera Division",
+          "problems": [
+            "score_draw+nil_nil+decisive=114.2, expected ~100 (partition must be complete)"
+          ]
+        },
+        "AUS1": {
+          "name": "Australia A-League 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Central Coast Mariners",
+              "problems": [
+                "h_btts=61.5 exceeds h_sr=15.4 (BTTS requires this team to have scored)",
+                "a_btts=71.4 exceeds a_sr=21.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Melbourne Victory",
+              "problems": [
+                "a_btts=53.8 exceeds a_sr=38.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Brisbane Roar",
+              "problems": [
+                "h_btts=66.7 exceeds h_sr=16.7 (BTTS requires this team to have scored)",
+                "a_btts=66.7 exceeds a_sr=25.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Newcastle United Jets",
+              "problems": [
+                "h_btts=61.5 exceeds h_sr=23.1 (BTTS requires this team to have scored)",
+                "a_btts=69.2 exceeds a_sr=38.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Western Sydney Wanderers",
+              "problems": [
+                "h_btts=84.6 exceeds h_sr=46.2 (BTTS requires this team to have scored)",
+                "a_btts=75.0 exceeds a_sr=50.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Sydney FC",
+              "problems": [
+                "h_btts=85.7 exceeds h_sr=50.0 (BTTS requires this team to have scored)",
+                "a_btts=53.8 exceeds a_sr=30.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Wellington Phoenix",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=16.7 (BTTS requires this team to have scored)",
+                "a_btts=61.5 exceeds a_sr=30.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Western United",
+              "problems": [
+                "a_btts=76.9 exceeds a_sr=53.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Macarthur FC",
+              "problems": [
+                "h_btts=76.9 exceeds h_sr=15.4 (BTTS requires this team to have scored)",
+                "a_btts=76.9 exceeds a_sr=53.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Perth Glory",
+              "problems": [
+                "h_btts=46.2 exceeds h_sr=15.4 (BTTS requires this team to have scored)",
+                "a_btts=46.2 exceeds a_sr=15.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Adelaide United",
+              "problems": [
+                "h_btts=100.0 exceeds h_sr=25.0 (BTTS requires this team to have scored)",
+                "a_btts=69.2 exceeds a_sr=46.2 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "AUT1": {
+          "name": "Austria Bundesliga 2025/26",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Sturm Graz",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=25.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Wolfsberger AC",
+              "problems": [
+                "a_btts=80.0 exceeds a_sr=60.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "SCR Altach",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=33.3 (BTTS requires this team to have scored)",
+                "a_btts=40.0 exceeds a_sr=20.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "WSG Tirol",
+              "problems": [
+                "h_btts=83.3 exceeds h_sr=50.0 (BTTS requires this team to have scored)",
+                "a_btts=60.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "TSV Hartberg",
+              "problems": [
+                "h_btts=75.0 exceeds h_sr=25.0 (BTTS requires this team to have scored)",
+                "a_btts=50.0 exceeds a_sr=37.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "SV Ried",
+              "problems": [
+                "h_btts=33.3 exceeds h_sr=16.7 (BTTS requires this team to have scored)",
+                "a_btts=66.7 exceeds a_sr=50.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "RB Salzburg",
+              "problems": [
+                "a_btts=80.0 exceeds a_sr=60.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Grazer AK",
+              "problems": [
+                "h_btts=71.4 exceeds h_sr=14.3 (BTTS requires this team to have scored)",
+                "a_btts=20.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Austria Wien",
+              "problems": [
+                "a_btts=83.3 exceeds a_sr=50.0 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "AUT2": {
+          "name": "Austria 2. Liga 2025/26",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "FC Liefering",
+              "problems": [
+                "h_btts=60.0 exceeds h_sr=40.0 (BTTS requires this team to have scored)",
+                "a_btts=57.1 exceeds a_sr=14.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Austria Lustenau",
+              "problems": [
+                "a_btts=66.7 exceeds a_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Kapfenberger SV 1919",
+              "problems": [
+                "h_btts=66.7 exceeds h_sr=50.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FC Admira Wacker",
+              "problems": [
+                "h_btts=60.0 exceeds h_sr=40.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "SV Stripfing/Weiden",
+              "problems": [
+                "a_btts=80.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "First Vienna FC",
+              "problems": [
+                "h_btts=42.9 exceeds h_sr=14.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "SKU Amstetten",
+              "problems": [
+                "a_btts=50.0 exceeds a_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Sturm Graz II",
+              "problems": [
+                "h_btts=71.4 exceeds h_sr=14.3 (BTTS requires this team to have scored)",
+                "a_btts=40.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Austria Salzburg",
+              "problems": [
+                "h_btts=83.3 exceeds h_sr=50.0 (BTTS requires this team to have scored)",
+                "a_btts=50.0 exceeds a_sr=16.7 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "SK Austria Klagenfurt",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Schwarz-Weiß Bregenz",
+              "problems": [
+                "h_btts=66.7 exceeds h_sr=0.0 (BTTS requires this team to have scored)",
+                "a_btts=83.3 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Rapid Wien II",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=16.7 (BTTS requires this team to have scored)",
+                "a_btts=66.7 exceeds a_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Austria Wien II",
+              "problems": [
+                "h_btts=66.7 exceeds h_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FC Hertha Wels",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=33.3 (BTTS requires this team to have scored)",
+                "a_btts=50.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "BRA1": {
+          "name": "Brazil Serie A",
+          "problems": [
+            "score_draw+nil_nil+decisive=104.0, expected ~100 (partition must be complete)"
+          ]
+        },
+        "ECU1": {
+          "name": "Ecuador Serie A",
+          "problems": [
+            "score_draw+nil_nil+decisive=108.1, expected ~100 (partition must be complete)"
+          ]
+        },
+        "EGY1": {
+          "name": "Egypt Premiership 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Haras El Hodood",
+              "problems": [
+                "a_btts=40.0 exceeds a_sr=20.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Smouha Sporting Club",
+              "problems": [
+                "h_btts=37.5 exceeds h_sr=25.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Tala'ea El Gaish SC",
+              "problems": [
+                "h_btts=22.2 exceeds h_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "El Gouna",
+              "problems": [
+                "a_btts=22.2 exceeds a_sr=11.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "ZED FC",
+              "problems": [
+                "h_btts=44.4 exceeds h_sr=22.2 (BTTS requires this team to have scored)",
+                "a_btts=50.0 exceeds a_sr=25.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Future FC",
+              "problems": [
+                "h_btts=22.2 exceeds h_sr=11.1 (BTTS requires this team to have scored)",
+                "a_btts=50.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "ENPPI",
+              "problems": [
+                "a_btts=33.3 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Pharco FC",
+              "problems": [
+                "h_btts=58.3 exceeds h_sr=41.7 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Ittihad El Iskandary",
+              "problems": [
+                "a_btts=50.0 exceeds a_sr=12.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "PetroJet FC",
+              "problems": [
+                "h_btts=60.0 exceeds h_sr=30.0 (BTTS requires this team to have scored)",
+                "a_btts=60.0 exceeds a_sr=30.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "National Bank SC",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=37.5 (BTTS requires this team to have scored)",
+                "a_btts=63.6 exceeds a_sr=54.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Ismaily",
+              "problems": [
+                "h_btts=37.5 exceeds h_sr=25.0 (BTTS requires this team to have scored)",
+                "a_btts=11.1 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Ghazl Al Mehalla",
+              "problems": [
+                "a_btts=37.5 exceeds a_sr=25.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Ceramica Cleopatra",
+              "problems": [
+                "h_btts=77.8 exceeds h_sr=33.3 (BTTS requires this team to have scored)",
+                "a_btts=50.0 exceeds a_sr=40.0 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "KAZ1": {
+          "name": "Kazakhstan Premier League 2025",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "FK Atyrau",
+              "problems": [
+                "a_btts=100.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FK Yelimay",
+              "problems": [
+                "a_btts=100.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FK Turan",
+              "problems": [
+                "a_btts=100.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FK Kyzylzhar",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Zhetysu Taldykorgan",
+              "problems": [
+                "a_btts=100.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FK Astana",
+              "problems": [
+                "h_btts=100.0 exceeds h_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FK Kairat",
+              "problems": [
+                "a_btts=100.0 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "MAR1": {
+          "name": "Morocco Botola Pro 1 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Difaâ d'el Jadida",
+              "problems": [
+                "a_btts=61.5 exceeds a_sr=23.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "JS Soualem",
+              "problems": [
+                "h_btts=38.5 exceeds h_sr=30.8 (BTTS requires this team to have scored)",
+                "a_btts=33.3 exceeds a_sr=8.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Chabab Mohammédia",
+              "problems": [
+                "h_btts=25.0 exceeds h_sr=0.0 (BTTS requires this team to have scored)",
+                "a_btts=53.8 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FAR de Rabat",
+              "problems": [
+                "a_btts=50.0 exceeds a_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Maghrib de Fès",
+              "problems": [
+                "a_btts=53.8 exceeds a_sr=30.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Wydad AC",
+              "problems": [
+                "a_btts=53.8 exceeds a_sr=30.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Union de Touarga",
+              "problems": [
+                "h_btts=58.3 exceeds h_sr=41.7 (BTTS requires this team to have scored)",
+                "a_btts=61.5 exceeds a_sr=15.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Raja Casablanca",
+              "problems": [
+                "a_btts=58.3 exceeds a_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Moghreb de Tétouan",
+              "problems": [
+                "h_btts=50.0 exceeds h_sr=8.3 (BTTS requires this team to have scored)",
+                "a_btts=38.5 exceeds a_sr=15.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Olympique de Safi",
+              "problems": [
+                "a_btts=58.3 exceeds a_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "COD Meknés",
+              "problems": [
+                "a_btts=46.2 exceeds a_sr=7.7 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Hassania US Agadir",
+              "problems": [
+                "h_btts=66.7 exceeds h_sr=33.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Ittihad Tanger",
+              "problems": [
+                "h_btts=69.2 exceeds h_sr=38.5 (BTTS requires this team to have scored)",
+                "a_btts=58.3 exceeds a_sr=16.7 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "MEX1": {
+          "name": "Mexico Liga MX 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Puebla FC",
+              "problems": [
+                "h_btts=58.8 exceeds h_sr=23.5 (BTTS requires this team to have scored)",
+                "a_btts=41.2 exceeds a_sr=11.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Santos Laguna",
+              "problems": [
+                "h_btts=41.2 exceeds h_sr=23.5 (BTTS requires this team to have scored)",
+                "a_btts=52.9 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Gallos Blancos",
+              "problems": [
+                "h_btts=41.2 exceeds h_sr=35.3 (BTTS requires this team to have scored)",
+                "a_btts=47.1 exceeds a_sr=17.6 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Club Tijuana",
+              "problems": [
+                "h_btts=88.2 exceeds h_sr=52.9 (BTTS requires this team to have scored)",
+                "a_btts=52.9 exceeds a_sr=29.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "FC Juárez",
+              "problems": [
+                "h_btts=58.8 exceeds h_sr=29.4 (BTTS requires this team to have scored)",
+                "a_btts=41.2 exceeds a_sr=35.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Atlas Guadalajara",
+              "problems": [
+                "h_btts=64.7 exceeds h_sr=29.4 (BTTS requires this team to have scored)",
+                "a_btts=58.8 exceeds a_sr=23.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Atlético San Luis",
+              "problems": [
+                "a_btts=52.9 exceeds a_sr=23.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "CF América",
+              "problems": [
+                "a_btts=52.9 exceeds a_sr=41.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "UANL Tigres",
+              "problems": [
+                "a_btts=41.2 exceeds a_sr=35.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Club Necaxa",
+              "problems": [
+                "h_btts=70.6 exceeds h_sr=47.1 (BTTS requires this team to have scored)",
+                "a_btts=52.9 exceeds a_sr=29.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Deportivo Guadalajara",
+              "problems": [
+                "a_btts=58.8 exceeds a_sr=23.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Deportivo Toluca",
+              "problems": [
+                "a_btts=58.8 exceeds a_sr=47.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Mazatlán FC",
+              "problems": [
+                "h_btts=58.8 exceeds h_sr=29.4 (BTTS requires this team to have scored)",
+                "a_btts=23.5 exceeds a_sr=5.9 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Pumas UNAM",
+              "problems": [
+                "a_btts=70.6 exceeds a_sr=35.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Club León",
+              "problems": [
+                "h_btts=47.1 exceeds h_sr=41.2 (BTTS requires this team to have scored)",
+                "a_btts=94.1 exceeds a_sr=29.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "CF Pachuca",
+              "problems": [
+                "h_btts=58.8 exceeds h_sr=41.2 (BTTS requires this team to have scored)",
+                "a_btts=70.6 exceeds a_sr=23.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "CF Monterrey",
+              "problems": [
+                "h_btts=64.7 exceeds h_sr=58.8 (BTTS requires this team to have scored)",
+                "a_btts=64.7 exceeds a_sr=41.2 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "NGA1": {
+          "name": "Nigeria Professional League 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Abia Warriors FC",
+              "problems": [
+                "a_btts=36.8 exceeds a_sr=15.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Remo Stars FC",
+              "problems": [
+                "a_btts=42.1 exceeds a_sr=26.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Bendel FC",
+              "problems": [
+                "a_btts=57.9 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Rivers United FC",
+              "problems": [
+                "a_btts=31.6 exceeds a_sr=15.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Heartland FC",
+              "problems": [
+                "a_btts=26.3 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Enyimba FC",
+              "problems": [
+                "a_btts=47.4 exceeds a_sr=21.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Kano Pillars FC",
+              "problems": [
+                "a_btts=47.4 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Ikorodu City FC",
+              "problems": [
+                "a_btts=42.1 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Kwara United FC",
+              "problems": [
+                "a_btts=47.4 exceeds a_sr=5.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Niger Tornadoes FC",
+              "problems": [
+                "h_btts=52.6 exceeds h_sr=47.4 (BTTS requires this team to have scored)",
+                "a_btts=52.6 exceeds a_sr=26.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Nasarawa United FC",
+              "problems": [
+                "a_btts=47.4 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Shooting Stars SC",
+              "problems": [
+                "a_btts=42.1 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Plateau United FC",
+              "problems": [
+                "a_btts=52.6 exceeds a_sr=10.5 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Katsina United FC",
+              "problems": [
+                "a_btts=10.5 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Sunshine Stars FC",
+              "problems": [
+                "a_btts=31.6 exceeds a_sr=5.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Bayelsa United FC",
+              "problems": [
+                "a_btts=31.6 exceeds a_sr=5.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Lobi Stars FC",
+              "problems": [
+                "h_btts=52.6 exceeds h_sr=31.6 (BTTS requires this team to have scored)",
+                "a_btts=31.6 exceeds a_sr=0.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Akwa United FC",
+              "problems": [
+                "a_btts=36.8 exceeds a_sr=5.3 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Rangers International FC",
+              "problems": [
+                "a_btts=31.6 exceeds a_sr=15.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "El-Kanemi Warriors FC",
+              "problems": [
+                "a_btts=42.1 exceeds a_sr=5.3 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        },
+        "PAR1": {
+          "name": "Paraguay Primera Division",
+          "problems": [
+            "score_draw+nil_nil+decisive=109.9, expected ~100 (partition must be complete)"
+          ]
+        },
+        "RSA1": {
+          "name": "South Africa Premier League 2024/25",
+          "problems": [],
+          "team_problems": [
+            {
+              "team": "Marumo Gallants",
+              "problems": [
+                "h_btts=53.8 exceeds h_sr=30.8 (BTTS requires this team to have scored)",
+                "a_btts=46.2 exceeds a_sr=30.8 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Kaizer Chiefs",
+              "problems": [
+                "h_btts=61.5 exceeds h_sr=38.5 (BTTS requires this team to have scored)",
+                "a_btts=38.5 exceeds a_sr=23.1 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "AmaZulu FC",
+              "problems": [
+                "a_btts=42.9 exceeds a_sr=28.6 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Richards Bay FC",
+              "problems": [
+                "a_btts=30.8 exceeds a_sr=15.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "TS Galaxy",
+              "problems": [
+                "a_btts=84.6 exceeds a_sr=15.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "SuperSport United",
+              "problems": [
+                "a_btts=46.2 exceeds a_sr=15.4 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Chippa United",
+              "problems": [
+                "a_btts=25.0 exceeds a_sr=16.7 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Sekhukhune United",
+              "problems": [
+                "a_btts=53.8 exceeds a_sr=46.2 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Golden Arrows",
+              "problems": [
+                "h_btts=33.3 exceeds h_sr=25.0 (BTTS requires this team to have scored)"
+              ]
+            },
+            {
+              "team": "Cape Town City FC",
+              "problems": [
+                "a_btts=15.4 exceeds a_sr=7.7 (BTTS requires this team to have scored)"
+              ]
+            }
+          ]
+        }
+      },
+      "random_sample_for_external_check": [
+        {
+          "code": "SC0",
+          "name": "Scotland Premiership",
+          "n": 228
+        },
+        {
+          "code": "BRA1",
+          "name": "Brazil Serie A",
+          "n": 177
+        },
+        {
+          "code": "ALG1",
+          "name": "Algeria Ligue 1 2024/25",
+          "n": 144
+        }
+      ],
+      "external_checks": []
+    },
+    {
+      "date": "2026-07-14",
+      "leagues_checked": 49,
+      "teams_checked": 932,
+      "structural_flags": {},
+      "random_sample_for_external_check": [
+        {
+          "code": "SC0",
+          "name": "Scotland Premiership",
+          "n": 228
+        },
+        {
+          "code": "BRA1",
+          "name": "Brazil Serie A",
+          "n": 177
+        },
+        {
+          "code": "ALG1",
+          "name": "Algeria Ligue 1 2024/25",
+          "n": 144
+        }
+      ],
+      "external_checks": [
+        {
+          "code": "SC0",
+          "query": "Scottish Premiership 2025-26 BTTS statistics",
+          "stored": {
+            "btts": 51.8,
+            "n": 228
+          },
+          "external_finding": "WinDrawWin/thestatsdontlie report ~52-54% BTTS this season (37 games in, one source put it at 20/37=54%).",
+          "verdict": "CONSISTENT",
+          "note": "Stored 51.8% is within normal source-to-source variance of the external 52-54% range."
+        },
+        {
+          "code": "BRA1",
+          "query": "Brazil Serie A 2025 season goals per game / BTTS",
+          "stored": {
+            "avg_goals": 2.66,
+            "n": 177
+          },
+          "external_finding": "soccerstats.com reports 177 of 380 matches played (exact match on n) and 2.52 avg goals/game.",
+          "verdict": "CONSISTENT",
+          "note": "Match count (n=177) confirmed exactly by an independent source. avg_goals 2.66 vs external 2.52 is a ~5% gap, within plausible cutoff-date/source variance -- not flagged."
+        },
+        {
+          "code": "ALG1",
+          "query": "Algeria Ligue 1 2024-25 season champion results table",
+          "stored": {
+            "n": 144
+          },
+          "external_finding": "footballdatabase/tribuna confirm the 2024/25 Algerian Ligue 1 season was 100% completed: 240 of 240 matches played (16 teams, full double round-robin), champion MC Alger.",
+          "verdict": "INCOMPLETE -- NOT falsified, but our dataset only has 144 of the season's 240 matches (60%).",
+          "note": "This is a genuine finding, not a false-data case: ALG1's BTTS/calibration numbers are based on a partial-season sample. Needs a follow-up re-ingestion from openfootball to pull the full 240-match season before this league's numbers should be fully trusted. Flagged for Vincent, not auto-corrected."
+        }
+      ]
+    }
+  ]
+}
