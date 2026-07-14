@@ -28,19 +28,19 @@
   <section class="tab-panel active" id="tab-btts">
     <div class="card">
       <h2>Quick-add from team stats</h2>
-      <p class="hint">22 major European leagues/divisions, real venue-split stats (2025-26 season). Pick a league and two teams — no manual data hunting needed. <span id="btts-tp-status" class="msg">Loading team data…</span></p>
+      <p class="hint">31 leagues worldwide, real venue-split stats: 22 major European leagues/divisions (football-data.co.uk, complete 2025-26 seasons) plus MLS, Japan J1, China Super League, Colombia, Argentina, Paraguay, Ecuador and Brazil Série A/B (openfootball, current season in progress). Pick a league and two teams — no manual data hunting needed. <span id="btts-tp-status" class="msg">Loading team data…</span></p>
       <div class="btn-row">
         <select id="btts-tp-league" class="text-input"><option value="">League…</option></select>
         <select id="btts-tp-home" class="text-input"><option value="">Home team…</option></select>
         <select id="btts-tp-away" class="text-input"><option value="">Away team…</option></select>
         <button id="btts-tp-add-btn" class="btn btn-primary">Add fixture</button>
       </div>
-      <p class="hint">Not one of these 22 leagues? Use the paste box below instead — it still works exactly the same for niche leagues.</p>
+      <p class="hint">Not one of these leagues? Use the paste box below instead — it still works exactly the same for niche leagues.</p>
     </div>
 
     <div class="card">
       <h2>Paste match list (names only)</h2>
-      <p class="hint">Straight off Lottotech's fixture list — match no., home team, away team, nothing else. Each team is auto-matched against the 22-league dataset (home and away don't need to share a league — pre-season friendlies routinely cross divisions/countries). Anything it can't find (Norway, Sweden, Brazil, Scottish Highland/Lowland league sides etc. aren't in this dataset yet) gets flagged so you can add it via the paste-JSON box below instead.</p>
+      <p class="hint">Straight off Lottotech's fixture list — match no., home team, away team, nothing else. Each team is auto-matched against the full dataset (home and away don't need to share a league — pre-season friendlies and cross-division pairings are handled). Anything it can't find gets flagged so you can add it via the paste-JSON box below instead.</p>
       <textarea id="btts-names-input" rows="6" placeholder="| 01 | Annan Athletic | Ross County |&#10;| 02 | Dumbarton | St. Mirren |&#10;..."></textarea>
       <div class="btn-row">
         <button id="btts-names-btn" class="btn btn-primary">Auto-match &amp; add</button>
@@ -93,7 +93,7 @@
   <section class="tab-panel" id="tab-pools">
     <div class="card">
       <h2>Quick-add from team stats</h2>
-      <p class="hint">Same 22-league dataset as Goal Rush. Pick a league and two teams to auto-fill the fixture. <span id="pools-tp-status" class="msg">Loading team data…</span></p>
+      <p class="hint">Same worldwide dataset as Goal Rush. Pick a league and two teams to auto-fill the fixture. <span id="pools-tp-status" class="msg">Loading team data…</span></p>
       <div class="btn-row">
         <select id="pools-tp-league" class="text-input"><option value="">League…</option></select>
         <select id="pools-tp-home" class="text-input"><option value="">Home team…</option></select>
@@ -104,7 +104,7 @@
 
     <div class="card">
       <h2>Paste match list (names only)</h2>
-      <p class="hint">Same auto-match as Goal Rush — paste match no./home/away straight off Lottotech and it fills in stats from the 22-league dataset. Unmatched teams (leagues outside the 22) are flagged for the paste-JSON box below.</p>
+      <p class="hint">Same auto-match as Goal Rush — paste match no./home/away straight off Lottotech and it fills in stats from the full dataset. Unmatched teams are flagged for the paste-JSON box below.</p>
       <textarea id="pools-names-input" rows="6" placeholder="| 01 | Annan Athletic | Ross County |&#10;| 02 | Dumbarton | St. Mirren |&#10;..."></textarea>
       <div class="btn-row">
         <button id="pools-names-btn" class="btn btn-primary">Auto-match &amp; add</button>
@@ -184,7 +184,7 @@
   <section class="tab-panel" id="tab-settings">
     <div class="card">
       <h2>League base rates</h2>
-      <p class="hint">Priors swing ±40pts week to week — re-verify before trusting blindly. Edit in place; changes are saved automatically. The 22 EuroData leagues merge in automatically alongside the original niche-league table below.</p>
+      <p class="hint">Priors swing ±40pts week to week — re-verify before trusting blindly. Edit in place; changes are saved automatically. The 31 EuroData/world leagues merge in automatically alongside the original niche-league table below.</p>
       <div class="table-wrap"><table id="leagues-table"><thead></thead><tbody></tbody></table></div>
       <div class="btn-row">
         <button id="league-add-btn" class="btn btn-primary">Add league</button>
