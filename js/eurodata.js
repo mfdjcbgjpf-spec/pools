@@ -1,32 +1,50 @@
 // ============================================================================
-// eurodata.js — loader for the football-data.co.uk derived European dataset
-// Source: EuroData_2025-26_BTTS_Pools_DataStore.json (single completed season,
-// freshest signal) — 22 major European leagues/divisions, team-level venue
-// splits (home/away goals for/against, clean sheets, scoring rate).
+// eurodata.js — loader for the football-data.co.uk / openfootball derived team
+// datasets. Two files are merged into one in-memory dataset:
+//   euro_2025-26.json  — 22 major European leagues/divisions (football-data.co.uk)
+//   world_2025-26.json — MLS, Japan J1, China, Colombia, Argentina, Paraguay,
+//                        Ecuador, Brazil Serie A/B (openfootball match-by-match
+//                        results, aggregated here to the same venue-split schema)
+// League codes are disjoint across both files (2-letter+digit European codes
+// vs. 3-letter+digit world codes) so merging is a plain object spread — no
+// collisions, no risk of one file's league silently overwriting the other's.
 //
-// A second file (euro_2024-26.json, two seasons pooled) ships alongside for
-// reference/future use but is not wired into the UI yet — 2025-26 alone is
-// more current and every league in it has a full, complete season already.
+// A third file (euro_2024-26.json, two seasons pooled) ships alongside for
+// reference/future use but is not wired into the UI yet.
 // ============================================================================
 
-const DATA_URL = './data/euro_2025-26.json';
+const DATA_URLS = ['./data/euro_2025-26.json', './data/world_2025-26.json'];
 
-let _cache = null; // resolved dataset, once fetched
+let _cache = null; // resolved, merged dataset, once fetched
 let _loadingPromise = null;
+
+async function fetchOne(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status} fetching ${url}`);
+  return r.json();
+}
 
 async function loadEuroData() {
   if (_cache) return _cache;
   if (_loadingPromise) return _loadingPromise;
-  _loadingPromise = fetch(DATA_URL)
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status} fetching ${DATA_URL}`);
-      return r.json();
-    })
-    .then(data => { _cache = data; return data; })
-    .catch(err => {
-      _loadingPromise = null; // allow retry on next call
-      throw err;
+  _loadingPromise = Promise.allSettled(DATA_URLS.map(fetchOne)).then(results => {
+    const ok = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+    if (ok.length === 0) {
+      _loadingPromise = null;
+      throw new Error(results.map(r => r.reason && r.reason.message).join('; '));
+    }
+    results.forEach((r, i) => {
+      if (r.status === 'rejected') console.warn(`EuroData: ${DATA_URLS[i]} failed to load — continuing with the rest.`, r.reason);
     });
+    const merged = {
+      source: ok.map(d => d.source).filter(Boolean).join(' + '),
+      built: ok.map(d => d.built).filter(Boolean).sort().pop(),
+      leagues: Object.assign({}, ...ok.map(d => d.leagues)),
+      teams: Object.assign({}, ...ok.map(d => d.teams)),
+    };
+    _cache = merged;
+    return merged;
+  });
   return _loadingPromise;
 }
 
@@ -131,9 +149,16 @@ function normalizeTeamName(s) {
     .trim();
 }
 
-// Generic club-type words shared by many unrelated clubs (Rangers, United, City, ...) --
-// matching on these alone produces false positives (e.g. "Brora Rangers" ~ "Rangers").
-const GENERIC_CLUB_WORDS = new Set(['rangers', 'united', 'city', 'athletic', 'albion', 'rovers', 'thistle', 'wanderers', 'town', 'county', 'academical', 'academy']);
+// Generic club-type/descriptor words shared by many unrelated clubs across many
+// countries (Rangers, United, City, Atletico, Deportivo, ...) -- matching on these
+// alone produces false positives (e.g. "Brora Rangers" ~ "Rangers"; "Atletico GO"
+// ~ any of six unrelated "Atlético ..." clubs across Argentina/Colombia/Paraguay).
+const GENERIC_CLUB_WORDS = new Set([
+  'rangers', 'united', 'city', 'athletic', 'albion', 'rovers', 'thistle', 'wanderers',
+  'town', 'county', 'academical', 'academy',
+  'atletico', 'deportivo', 'club', 'nacional', 'independiente', 'real', 'sporting',
+  'racing', 'sport', 'union', 'national',
+]);
 
 /**
  * Score how well two already-normalized names match.
@@ -159,19 +184,22 @@ function teamMatchScore(aNorm, bNorm) {
   // produce dangerous false positives (e.g. "Brora Rangers" must NOT match "Rangers").
   if (longer.endsWith(' ' + shorter) && !GENERIC_CLUB_WORDS.has(shorter)) return 90;
   // exact-token overlap (e.g. "Queen of the South" -> "Queen of Sth"; "Raith Rovers" -> "Raith Rvs")
+  // Generic words are excluded from counting as a match signal on their own -- e.g.
+  // "atletico" alone must NOT tie together six unrelated "Atlético ..." clubs.
   const ta = aNorm.split(' ').filter(Boolean), tb = bNorm.split(' ').filter(Boolean);
   const setB = new Set(tb);
-  const shared = ta.filter(t => setB.has(t));
-  if (shared.length >= 2) return 85;
-  // a single shared token only counts if it's not a generic club-type word shared by many
-  // unrelated clubs (Rangers, United, City, ...) -- that produces false positives like
-  // "Brora Rangers" partially matching "Rangers" or "Cove Rangers".
-  if (shared.length === 1 && shared[0].length >= 5 && !GENERIC_CLUB_WORDS.has(shared[0])) return 65;
-  // contracted/abbreviated first-token fallback (e.g. "Airdrieonians" -> "Airdrie Utd")
+  const sharedAll = ta.filter(t => setB.has(t));
+  const sharedMeaningful = sharedAll.filter(t => t.length >= 4 && !GENERIC_CLUB_WORDS.has(t));
+  if (sharedMeaningful.length >= 2) return 85;
+  if (sharedMeaningful.length === 1 && sharedMeaningful[0].length >= 5) return 65;
+  // contracted/abbreviated first-token fallback (e.g. "Airdrieonians" -> "Airdrie Utd") --
+  // skipped entirely when the first token is a generic word, for the same reason.
   const fa = ta[0] || '', fb = tb[0] || '';
-  const fShort = fa.length <= fb.length ? fa : fb;
-  const fLong = fa.length <= fb.length ? fb : fa;
-  if (fShort.length >= 5 && fLong.startsWith(fShort)) return 55;
+  if (!GENERIC_CLUB_WORDS.has(fa) && !GENERIC_CLUB_WORDS.has(fb)) {
+    const fShort = fa.length <= fb.length ? fa : fb;
+    const fLong = fa.length <= fb.length ? fb : fa;
+    if (fShort.length >= 5 && fLong.startsWith(fShort)) return 55;
+  }
   return 0;
 }
 
