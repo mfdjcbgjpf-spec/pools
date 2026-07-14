@@ -1,0 +1,972 @@
+{
+  "_meta": {
+    "schema": 1,
+    "description": "Auto-tuned per-league BTTS calibration deltas, produced by the weekly self-improvement job (scripts/self_improve.py). Each cycle re-checks the Dixon-Coles model's implied BTTS rate against the league's actual observed BTTS rate this season and nudges delta by a bounded step to close the gap. Deltas are clamped to [-0.15, 0.15] and move at most 0.03 per cycle.",
+    "last_run": "2026-07-14",
+    "run_count": 1
+  },
+  "leagues": {
+    "AFCON25": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 36,
+      "empirical_btts": 0.528,
+      "model_implied_btts": 0.496,
+      "gap": 0.032
+    },
+    "ALG1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 144,
+      "empirical_btts": 0.382,
+      "model_implied_btts": 0.3595,
+      "gap": 0.0225
+    },
+    "ARG1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 240,
+      "empirical_btts": 0.375,
+      "model_implied_btts": 0.3911,
+      "gap": -0.0161
+    },
+    "AUS1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 167,
+      "empirical_btts": 0.629,
+      "model_implied_btts": 0.6632,
+      "gap": -0.0342
+    },
+    "AUT1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 70,
+      "empirical_btts": 0.514,
+      "model_implied_btts": 0.5656,
+      "gap": -0.0516
+    },
+    "AUT2": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 96,
+      "empirical_btts": 0.542,
+      "model_implied_btts": 0.5778,
+      "gap": -0.0358
+    },
+    "B1": {
+      "delta": -0.0194,
+      "last_tuned": "2026-07-14",
+      "n": 311,
+      "empirical_btts": 0.537,
+      "model_implied_btts": 0.5467,
+      "gap": -0.0097
+    },
+    "BRA1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 177,
+      "empirical_btts": 0.582,
+      "model_implied_btts": 0.5342,
+      "gap": 0.0478
+    },
+    "BRA2": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 53,
+      "empirical_btts": 0.472,
+      "model_implied_btts": 0.4217,
+      "gap": 0.0503
+    },
+    "CHN1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 77,
+      "empirical_btts": 0.675,
+      "model_implied_btts": 0.6408,
+      "gap": 0.0342
+    },
+    "CL1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 189,
+      "empirical_btts": 0.566,
+      "model_implied_btts": 0.6713,
+      "gap": -0.1053
+    },
+    "COL1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 139,
+      "empirical_btts": 0.475,
+      "model_implied_btts": 0.4901,
+      "gap": -0.0151
+    },
+    "COPA24": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 32,
+      "empirical_btts": 0.375,
+      "model_implied_btts": 0.4217,
+      "gap": -0.0467
+    },
+    "CRC1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 254,
+      "empirical_btts": 0.524,
+      "model_implied_btts": 0.4987,
+      "gap": 0.0253
+    },
+    "D1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.618,
+      "model_implied_btts": 0.6434,
+      "gap": -0.0254
+    },
+    "D2": {
+      "delta": 0.0088,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.595,
+      "model_implied_btts": 0.5906,
+      "gap": 0.0044
+    },
+    "E0": {
+      "delta": 0.0058,
+      "last_tuned": "2026-07-14",
+      "n": 380,
+      "empirical_btts": 0.561,
+      "model_implied_btts": 0.5581,
+      "gap": 0.0029
+    },
+    "E1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 552,
+      "empirical_btts": 0.569,
+      "model_implied_btts": 0.5327,
+      "gap": 0.0363
+    },
+    "E2": {
+      "delta": -0.0179,
+      "last_tuned": "2026-07-14",
+      "n": 552,
+      "empirical_btts": 0.525,
+      "model_implied_btts": 0.5339,
+      "gap": -0.0089
+    },
+    "E3": {
+      "delta": -0.005,
+      "last_tuned": "2026-07-14",
+      "n": 552,
+      "empirical_btts": 0.525,
+      "model_implied_btts": 0.5275,
+      "gap": -0.0025
+    },
+    "EC": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 552,
+      "empirical_btts": 0.563,
+      "model_implied_btts": 0.5933,
+      "gap": -0.0303
+    },
+    "ECU1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 86,
+      "empirical_btts": 0.535,
+      "model_implied_btts": 0.5091,
+      "gap": 0.0259
+    },
+    "EGY1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 167,
+      "empirical_btts": 0.395,
+      "model_implied_btts": 0.4332,
+      "gap": -0.0382
+    },
+    "F1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.507,
+      "model_implied_btts": 0.5701,
+      "gap": -0.0631
+    },
+    "F2": {
+      "delta": -0.0097,
+      "last_tuned": "2026-07-14",
+      "n": 305,
+      "empirical_btts": 0.518,
+      "model_implied_btts": 0.5228,
+      "gap": -0.0048
+    },
+    "G1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 236,
+      "empirical_btts": 0.487,
+      "model_implied_btts": 0.522,
+      "gap": -0.035
+    },
+    "GOLD13": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 25,
+      "empirical_btts": 0.36,
+      "model_implied_btts": 0.5201,
+      "gap": -0.1601
+    },
+    "I1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 380,
+      "empirical_btts": 0.453,
+      "model_implied_btts": 0.4998,
+      "gap": -0.0468
+    },
+    "I2": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 380,
+      "empirical_btts": 0.542,
+      "model_implied_btts": 0.5151,
+      "gap": 0.0269
+    },
+    "ISR1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 238,
+      "empirical_btts": 0.534,
+      "model_implied_btts": 0.5703,
+      "gap": -0.0363
+    },
+    "JPN1": {
+      "delta": 0.0137,
+      "last_tuned": "2026-07-14",
+      "n": 127,
+      "empirical_btts": 0.488,
+      "model_implied_btts": 0.4812,
+      "gap": 0.0068
+    },
+    "MAR1": {
+      "delta": -0.0096,
+      "last_tuned": "2026-07-14",
+      "n": 200,
+      "empirical_btts": 0.455,
+      "model_implied_btts": 0.4598,
+      "gap": -0.0048
+    },
+    "MEX1": {
+      "delta": -0.0022,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.552,
+      "model_implied_btts": 0.5531,
+      "gap": -0.0011
+    },
+    "MLS1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 146,
+      "empirical_btts": 0.575,
+      "model_implied_btts": 0.6089,
+      "gap": -0.0339
+    },
+    "N1": {
+      "delta": -0.0057,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.627,
+      "model_implied_btts": 0.6299,
+      "gap": -0.0029
+    },
+    "NGA1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 380,
+      "empirical_btts": 0.395,
+      "model_implied_btts": 0.3534,
+      "gap": 0.0416
+    },
+    "P1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.48,
+      "model_implied_btts": 0.5466,
+      "gap": -0.0666
+    },
+    "PAR1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 101,
+      "empirical_btts": 0.495,
+      "model_implied_btts": 0.4405,
+      "gap": 0.0545
+    },
+    "RSA1": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 188,
+      "empirical_btts": 0.372,
+      "model_implied_btts": 0.4,
+      "gap": -0.028
+    },
+    "SC0": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 228,
+      "empirical_btts": 0.518,
+      "model_implied_btts": 0.5598,
+      "gap": -0.0418
+    },
+    "SC1": {
+      "delta": -0.0268,
+      "last_tuned": "2026-07-14",
+      "n": 180,
+      "empirical_btts": 0.483,
+      "model_implied_btts": 0.4964,
+      "gap": -0.0134
+    },
+    "SC2": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 180,
+      "empirical_btts": 0.522,
+      "model_implied_btts": 0.5428,
+      "gap": -0.0208
+    },
+    "SC3": {
+      "delta": 0.0262,
+      "last_tuned": "2026-07-14",
+      "n": 180,
+      "empirical_btts": 0.611,
+      "model_implied_btts": 0.5979,
+      "gap": 0.0131
+    },
+    "SP1": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 380,
+      "empirical_btts": 0.566,
+      "model_implied_btts": 0.5395,
+      "gap": 0.0265
+    },
+    "SP2": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 462,
+      "empirical_btts": 0.558,
+      "model_implied_btts": 0.5364,
+      "gap": 0.0216
+    },
+    "T1": {
+      "delta": 0.0086,
+      "last_tuned": "2026-07-14",
+      "n": 306,
+      "empirical_btts": 0.546,
+      "model_implied_btts": 0.5417,
+      "gap": 0.0043
+    },
+    "WC22": {
+      "delta": -0.03,
+      "last_tuned": "2026-07-14",
+      "n": 64,
+      "empirical_btts": 0.484,
+      "model_implied_btts": 0.5383,
+      "gap": -0.0543
+    },
+    "WC26": {
+      "delta": 0.03,
+      "last_tuned": "2026-07-14",
+      "n": 30,
+      "empirical_btts": 0.633,
+      "model_implied_btts": 0.5496,
+      "gap": 0.0834
+    }
+  },
+  "changelog": [
+    {
+      "date": "2026-07-14",
+      "code": "AFCON25",
+      "league": "Africa Cup of Nations 2025 (group stage only)",
+      "n": 36,
+      "empirical_btts": 0.528,
+      "model_implied_btts": 0.496,
+      "gap": 0.032,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "ALG1",
+      "league": "Algeria Ligue 1 2024/25",
+      "n": 144,
+      "empirical_btts": 0.382,
+      "model_implied_btts": 0.3595,
+      "gap": 0.0225,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "ARG1",
+      "league": "Argentina Primera Division",
+      "n": 240,
+      "empirical_btts": 0.375,
+      "model_implied_btts": 0.3911,
+      "gap": -0.0161,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "AUS1",
+      "league": "Australia A-League 2024/25",
+      "n": 167,
+      "empirical_btts": 0.629,
+      "model_implied_btts": 0.6632,
+      "gap": -0.0342,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "AUT1",
+      "league": "Austria Bundesliga 2025/26",
+      "n": 70,
+      "empirical_btts": 0.514,
+      "model_implied_btts": 0.5656,
+      "gap": -0.0516,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "AUT2",
+      "league": "Austria 2. Liga 2025/26",
+      "n": 96,
+      "empirical_btts": 0.542,
+      "model_implied_btts": 0.5778,
+      "gap": -0.0358,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "B1",
+      "league": "Belgium Pro League",
+      "n": 311,
+      "empirical_btts": 0.537,
+      "model_implied_btts": 0.5467,
+      "gap": -0.0097,
+      "old_delta": 0.0,
+      "new_delta": -0.0194,
+      "step": -0.0194
+    },
+    {
+      "date": "2026-07-14",
+      "code": "BRA1",
+      "league": "Brazil Serie A",
+      "n": 177,
+      "empirical_btts": 0.582,
+      "model_implied_btts": 0.5342,
+      "gap": 0.0478,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "BRA2",
+      "league": "Brazil Serie B",
+      "n": 53,
+      "empirical_btts": 0.472,
+      "model_implied_btts": 0.4217,
+      "gap": 0.0503,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "CHN1",
+      "league": "China Super League",
+      "n": 77,
+      "empirical_btts": 0.675,
+      "model_implied_btts": 0.6408,
+      "gap": 0.0342,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "CL1",
+      "league": "UEFA Champions League 2025/26",
+      "n": 189,
+      "empirical_btts": 0.566,
+      "model_implied_btts": 0.6713,
+      "gap": -0.1053,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "COL1",
+      "league": "Colombia Primera A",
+      "n": 139,
+      "empirical_btts": 0.475,
+      "model_implied_btts": 0.4901,
+      "gap": -0.0151,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "COPA24",
+      "league": "Copa América 2024",
+      "n": 32,
+      "empirical_btts": 0.375,
+      "model_implied_btts": 0.4217,
+      "gap": -0.0467,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "CRC1",
+      "league": "Costa Rica Primera División 2024/25",
+      "n": 254,
+      "empirical_btts": 0.524,
+      "model_implied_btts": 0.4987,
+      "gap": 0.0253,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "D1",
+      "league": "Germany Bundesliga",
+      "n": 306,
+      "empirical_btts": 0.618,
+      "model_implied_btts": 0.6434,
+      "gap": -0.0254,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "D2",
+      "league": "Germany 2.Bundesliga",
+      "n": 306,
+      "empirical_btts": 0.595,
+      "model_implied_btts": 0.5906,
+      "gap": 0.0044,
+      "old_delta": 0.0,
+      "new_delta": 0.0088,
+      "step": 0.0088
+    },
+    {
+      "date": "2026-07-14",
+      "code": "E0",
+      "league": "England Premier League",
+      "n": 380,
+      "empirical_btts": 0.561,
+      "model_implied_btts": 0.5581,
+      "gap": 0.0029,
+      "old_delta": 0.0,
+      "new_delta": 0.0058,
+      "step": 0.0058
+    },
+    {
+      "date": "2026-07-14",
+      "code": "E1",
+      "league": "England Championship",
+      "n": 552,
+      "empirical_btts": 0.569,
+      "model_implied_btts": 0.5327,
+      "gap": 0.0363,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "E2",
+      "league": "England League One",
+      "n": 552,
+      "empirical_btts": 0.525,
+      "model_implied_btts": 0.5339,
+      "gap": -0.0089,
+      "old_delta": 0.0,
+      "new_delta": -0.0179,
+      "step": -0.0179
+    },
+    {
+      "date": "2026-07-14",
+      "code": "E3",
+      "league": "England League Two",
+      "n": 552,
+      "empirical_btts": 0.525,
+      "model_implied_btts": 0.5275,
+      "gap": -0.0025,
+      "old_delta": 0.0,
+      "new_delta": -0.005,
+      "step": -0.005
+    },
+    {
+      "date": "2026-07-14",
+      "code": "EC",
+      "league": "England National League",
+      "n": 552,
+      "empirical_btts": 0.563,
+      "model_implied_btts": 0.5933,
+      "gap": -0.0303,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "ECU1",
+      "league": "Ecuador Serie A",
+      "n": 86,
+      "empirical_btts": 0.535,
+      "model_implied_btts": 0.5091,
+      "gap": 0.0259,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "EGY1",
+      "league": "Egypt Premiership 2024/25",
+      "n": 167,
+      "empirical_btts": 0.395,
+      "model_implied_btts": 0.4332,
+      "gap": -0.0382,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "F1",
+      "league": "France Ligue 1",
+      "n": 306,
+      "empirical_btts": 0.507,
+      "model_implied_btts": 0.5701,
+      "gap": -0.0631,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "F2",
+      "league": "France Ligue 2",
+      "n": 305,
+      "empirical_btts": 0.518,
+      "model_implied_btts": 0.5228,
+      "gap": -0.0048,
+      "old_delta": 0.0,
+      "new_delta": -0.0097,
+      "step": -0.0097
+    },
+    {
+      "date": "2026-07-14",
+      "code": "G1",
+      "league": "Greece Super League",
+      "n": 236,
+      "empirical_btts": 0.487,
+      "model_implied_btts": 0.522,
+      "gap": -0.035,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "GOLD13",
+      "league": "CONCACAF Gold Cup 2013 (stale, no 2015-2025 data)",
+      "n": 25,
+      "empirical_btts": 0.36,
+      "model_implied_btts": 0.5201,
+      "gap": -0.1601,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "I1",
+      "league": "Italy Serie A",
+      "n": 380,
+      "empirical_btts": 0.453,
+      "model_implied_btts": 0.4998,
+      "gap": -0.0468,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "I2",
+      "league": "Italy Serie B",
+      "n": 380,
+      "empirical_btts": 0.542,
+      "model_implied_btts": 0.5151,
+      "gap": 0.0269,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "ISR1",
+      "league": "Israel Premier League 2024/25",
+      "n": 238,
+      "empirical_btts": 0.534,
+      "model_implied_btts": 0.5703,
+      "gap": -0.0363,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "JPN1",
+      "league": "Japan J1 League",
+      "n": 127,
+      "empirical_btts": 0.488,
+      "model_implied_btts": 0.4812,
+      "gap": 0.0068,
+      "old_delta": 0.0,
+      "new_delta": 0.0137,
+      "step": 0.0137
+    },
+    {
+      "date": "2026-07-14",
+      "code": "MAR1",
+      "league": "Morocco Botola Pro 1 2024/25",
+      "n": 200,
+      "empirical_btts": 0.455,
+      "model_implied_btts": 0.4598,
+      "gap": -0.0048,
+      "old_delta": 0.0,
+      "new_delta": -0.0096,
+      "step": -0.0096
+    },
+    {
+      "date": "2026-07-14",
+      "code": "MEX1",
+      "league": "Mexico Liga MX 2024/25",
+      "n": 306,
+      "empirical_btts": 0.552,
+      "model_implied_btts": 0.5531,
+      "gap": -0.0011,
+      "old_delta": 0.0,
+      "new_delta": -0.0022,
+      "step": -0.0022
+    },
+    {
+      "date": "2026-07-14",
+      "code": "MLS1",
+      "league": "USA Major League Soccer",
+      "n": 146,
+      "empirical_btts": 0.575,
+      "model_implied_btts": 0.6089,
+      "gap": -0.0339,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "N1",
+      "league": "Netherlands Eredivisie",
+      "n": 306,
+      "empirical_btts": 0.627,
+      "model_implied_btts": 0.6299,
+      "gap": -0.0029,
+      "old_delta": 0.0,
+      "new_delta": -0.0057,
+      "step": -0.0057
+    },
+    {
+      "date": "2026-07-14",
+      "code": "NGA1",
+      "league": "Nigeria Professional League 2024/25",
+      "n": 380,
+      "empirical_btts": 0.395,
+      "model_implied_btts": 0.3534,
+      "gap": 0.0416,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "P1",
+      "league": "Portugal Primeira",
+      "n": 306,
+      "empirical_btts": 0.48,
+      "model_implied_btts": 0.5466,
+      "gap": -0.0666,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "PAR1",
+      "league": "Paraguay Primera Division",
+      "n": 101,
+      "empirical_btts": 0.495,
+      "model_implied_btts": 0.4405,
+      "gap": 0.0545,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "RSA1",
+      "league": "South Africa Premier League 2024/25",
+      "n": 188,
+      "empirical_btts": 0.372,
+      "model_implied_btts": 0.4,
+      "gap": -0.028,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "SC0",
+      "league": "Scotland Premiership",
+      "n": 228,
+      "empirical_btts": 0.518,
+      "model_implied_btts": 0.5598,
+      "gap": -0.0418,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "SC1",
+      "league": "Scotland Championship",
+      "n": 180,
+      "empirical_btts": 0.483,
+      "model_implied_btts": 0.4964,
+      "gap": -0.0134,
+      "old_delta": 0.0,
+      "new_delta": -0.0268,
+      "step": -0.0268
+    },
+    {
+      "date": "2026-07-14",
+      "code": "SC2",
+      "league": "Scotland League One",
+      "n": 180,
+      "empirical_btts": 0.522,
+      "model_implied_btts": 0.5428,
+      "gap": -0.0208,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "SC3",
+      "league": "Scotland League Two",
+      "n": 180,
+      "empirical_btts": 0.611,
+      "model_implied_btts": 0.5979,
+      "gap": 0.0131,
+      "old_delta": 0.0,
+      "new_delta": 0.0262,
+      "step": 0.0262
+    },
+    {
+      "date": "2026-07-14",
+      "code": "SP1",
+      "league": "Spain La Liga",
+      "n": 380,
+      "empirical_btts": 0.566,
+      "model_implied_btts": 0.5395,
+      "gap": 0.0265,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "SP2",
+      "league": "Spain Segunda",
+      "n": 462,
+      "empirical_btts": 0.558,
+      "model_implied_btts": 0.5364,
+      "gap": 0.0216,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "T1",
+      "league": "Turkey Super Lig",
+      "n": 306,
+      "empirical_btts": 0.546,
+      "model_implied_btts": 0.5417,
+      "gap": 0.0043,
+      "old_delta": 0.0,
+      "new_delta": 0.0086,
+      "step": 0.0086
+    },
+    {
+      "date": "2026-07-14",
+      "code": "WC22",
+      "league": "FIFA World Cup 2022",
+      "n": 64,
+      "empirical_btts": 0.484,
+      "model_implied_btts": 0.5383,
+      "gap": -0.0543,
+      "old_delta": 0.0,
+      "new_delta": -0.03,
+      "step": -0.03
+    },
+    {
+      "date": "2026-07-14",
+      "code": "WC26",
+      "league": "FIFA World Cup 2026 (group stage only, in progress)",
+      "n": 30,
+      "empirical_btts": 0.633,
+      "model_implied_btts": 0.5496,
+      "gap": 0.0834,
+      "old_delta": 0.0,
+      "new_delta": 0.03,
+      "step": 0.03
+    }
+  ]
+}
