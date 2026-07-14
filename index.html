@@ -39,6 +39,16 @@
     </div>
 
     <div class="card">
+      <h2>Paste match list (names only)</h2>
+      <p class="hint">Straight off Lottotech's fixture list — match no., home team, away team, nothing else. Each team is auto-matched against the 22-league dataset (home and away don't need to share a league — pre-season friendlies routinely cross divisions/countries). Anything it can't find (Norway, Sweden, Brazil, Scottish Highland/Lowland league sides etc. aren't in this dataset yet) gets flagged so you can add it via the paste-JSON box below instead.</p>
+      <textarea id="btts-names-input" rows="6" placeholder="| 01 | Annan Athletic | Ross County |&#10;| 02 | Dumbarton | St. Mirren |&#10;..."></textarea>
+      <div class="btn-row">
+        <button id="btts-names-btn" class="btn btn-primary">Auto-match &amp; add</button>
+        <span id="btts-names-msg" class="msg"></span>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>1 · Paste the board</h2>
       <p class="hint">Paste the JSON fixture list you collected (Gemini template / manual research). Enter the <strong>full ~35-match board</strong> for an accurate scarcity read, not just your shortlist.</p>
       <textarea id="btts-input" rows="8" placeholder='{"matches":[{"match_no":1,"fixture":"Home v Away","league":"Allsvenskan","n":18,"hgf":2.6,"hga":0.7,"agf":0.6,"aga":1.9,"runaway":0}, ...]}'></textarea>
@@ -89,6 +99,16 @@
         <select id="pools-tp-home" class="text-input"><option value="">Home team…</option></select>
         <select id="pools-tp-away" class="text-input"><option value="">Away team…</option></select>
         <button id="pools-tp-add-btn" class="btn btn-primary">Add fixture</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Paste match list (names only)</h2>
+      <p class="hint">Same auto-match as Goal Rush — paste match no./home/away straight off Lottotech and it fills in stats from the 22-league dataset. Unmatched teams (leagues outside the 22) are flagged for the paste-JSON box below.</p>
+      <textarea id="pools-names-input" rows="6" placeholder="| 01 | Annan Athletic | Ross County |&#10;| 02 | Dumbarton | St. Mirren |&#10;..."></textarea>
+      <div class="btn-row">
+        <button id="pools-names-btn" class="btn btn-primary">Auto-match &amp; add</button>
+        <span id="pools-names-msg" class="msg"></span>
       </div>
     </div>
 
