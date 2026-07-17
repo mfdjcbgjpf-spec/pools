@@ -46,8 +46,13 @@
       <textarea id="btts-names-input" rows="6" placeholder="| 01 | Annan Athletic | Ross County |&#10;| 02 | Dumbarton | St. Mirren |&#10;..."></textarea>
       <div class="btn-row">
         <button id="btts-names-btn" class="btn btn-primary">Auto-match &amp; add</button>
+        <label class="btn btn-ghost file-btn">📷 Read coupon screenshot (Gemini)
+          <input type="file" id="btts-coupon-img" accept="image/*" hidden>
+        </label>
+        <button id="btts-gemini-btn" class="btn btn-ghost">🤖 Research stats with Gemini</button>
         <span id="btts-names-msg" class="msg"></span>
       </div>
+      <p class="hint">Gemini (needs an API key in Leagues &amp; Settings) web-searches venue-split stats for the pasted fixtures and fills the "Paste the board" box below — raw numbers only, you review before adding. Use it for coupons the built-in dataset doesn't cover.</p>
       <div id="btts-nogo-alert" class="nogo-banner hidden"></div>
     </div>
 
@@ -85,6 +90,11 @@
       </div>
       <div id="btts-slip-report" class="slip-report"></div>
       <div class="btn-row">
+        <button id="btts-review-btn" class="btn btn-ghost">🧠 Review picks with Claude</button>
+        <span id="btts-review-msg" class="msg"></span>
+      </div>
+      <div id="btts-review-out" class="ai-review hidden"></div>
+      <div class="btn-row">
         <input type="text" id="btts-coupon-name" placeholder="Coupon label (e.g. 20-21 Jul)" class="text-input">
         <input type="number" id="btts-stake" placeholder="Stake Rs" class="text-input num-input">
         <button id="btts-save-ticket-btn" class="btn btn-primary">Save as ticket</button>
@@ -113,6 +123,10 @@
       <textarea id="pools-names-input" rows="6" placeholder="| 01 | Annan Athletic | Ross County |&#10;| 02 | Dumbarton | St. Mirren |&#10;..."></textarea>
       <div class="btn-row">
         <button id="pools-names-btn" class="btn btn-primary">Auto-match &amp; add</button>
+        <label class="btn btn-ghost file-btn">📷 Read coupon screenshot (Gemini)
+          <input type="file" id="pools-coupon-img" accept="image/*" hidden>
+        </label>
+        <button id="pools-gemini-btn" class="btn btn-ghost">🤖 Research stats with Gemini</button>
         <span id="pools-names-msg" class="msg"></span>
       </div>
       <div id="pools-nogo-alert" class="nogo-banner hidden"></div>
@@ -149,6 +163,11 @@
         <button id="pools-clearpick-btn" class="btn btn-ghost">Clear picks</button>
       </div>
       <div id="pools-slip-report" class="slip-report"></div>
+      <div class="btn-row">
+        <button id="pools-review-btn" class="btn btn-ghost">🧠 Review picks with Claude</button>
+        <span id="pools-review-msg" class="msg"></span>
+      </div>
+      <div id="pools-review-out" class="ai-review hidden"></div>
       <div class="btn-row">
         <input type="text" id="pools-coupon-name" placeholder="Coupon label" class="text-input">
         <input type="number" id="pools-stake" placeholder="Stake Rs" class="text-input num-input">
@@ -217,6 +236,22 @@
     </div>
 
     <div class="card">
+      <h2>AI assistants (optional)</h2>
+      <p class="hint">Two optional helpers: <strong>Gemini</strong> web-searches raw venue-split stats for fixtures the dataset doesn't cover; <strong>Claude</strong> reviews your picked slip for injuries, rotation and motivation red flags. Neither one produces probabilities — the Poisson engine stays the only source of numbers. Keys are stored in this browser's local storage only, are <strong>excluded from backup exports</strong>, and each call costs API credit on your own account.</p>
+      <div class="settings-grid">
+        <div><label>Gemini API key (aistudio.google.com — free tier available)</label>
+          <input type="password" id="ai-gemini-key" placeholder="AIza..." autocomplete="off"></div>
+        <div><label>Claude API key (console.anthropic.com — paid)</label>
+          <input type="password" id="ai-claude-key" placeholder="sk-ant-..." autocomplete="off"></div>
+      </div>
+      <div class="btn-row">
+        <button id="ai-keys-save-btn" class="btn btn-primary">Save keys</button>
+        <button id="ai-keys-clear-btn" class="btn btn-ghost">Clear keys</button>
+        <span id="ai-keys-msg" class="msg"></span>
+      </div>
+    </div>
+
+    <div class="card">
       <h2>Data pipeline notes</h2>
       <div id="pipeline-notes"></div>
     </div>
@@ -246,9 +281,8 @@
   <span>Engine v3 · runs entirely in your browser, nothing leaves your device.</span>
 </footer>
 
+<div id="toast" class="toast"></div>
+
 <script type="module" src="js/app.js"></script>
-</body>
-</html>
-"js/app.js"></script>
 </body>
 </html>
