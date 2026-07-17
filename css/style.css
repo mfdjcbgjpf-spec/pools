@@ -219,3 +219,18 @@ tr.row-caution td:first-child { border-left: 3px solid var(--amber); }
 
 label.checkbox-cell { display:flex; align-items:center; justify-content:center; }
 input[type=checkbox] { width: 18px; height: 18px; }
+
+/* AI assistant panels */
+.ai-review {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.ai-review.hidden { display: none; }
+.ai-review .ai-review-title { font-weight: 600; margin-bottom: 6px; display: block; }
+.btn[disabled] { opacity: 0.5; cursor: wait; }
