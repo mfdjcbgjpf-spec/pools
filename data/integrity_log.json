@@ -1,8 +1,8 @@
 {
   "_meta": {
     "schema": 1,
-    "last_run": "2026-07-14",
-    "run_count": 2
+    "last_run": "2026-07-20",
+    "run_count": 3
   },
   "runs": [
     {
@@ -986,6 +986,68 @@
           "external_finding": "footballdatabase/tribuna confirm the 2024/25 Algerian Ligue 1 season was 100% completed: 240 of 240 matches played (16 teams, full double round-robin), champion MC Alger.",
           "verdict": "INCOMPLETE -- NOT falsified, but our dataset only has 144 of the season's 240 matches (60%).",
           "note": "This is a genuine finding, not a false-data case: ALG1's BTTS/calibration numbers are based on a partial-season sample. Needs a follow-up re-ingestion from openfootball to pull the full 240-match season before this league's numbers should be fully trusted. Flagged for Vincent, not auto-corrected."
+        }
+      ]
+    },
+    {
+      "date": "2026-07-20",
+      "leagues_checked": 49,
+      "teams_checked": 932,
+      "structural_flags": {},
+      "random_sample_for_external_check": [
+        {
+          "code": "CHN1",
+          "name": "China Super League",
+          "n": 77
+        },
+        {
+          "code": "EGY1",
+          "name": "Egypt Premiership 2024/25",
+          "n": 167
+        },
+        {
+          "code": "E3",
+          "name": "England League Two",
+          "n": 552
+        }
+      ],
+      "external_checks": [
+        {
+          "code": "CHN1",
+          "query": "Chinese Super League 2026 BTTS / average goals per game",
+          "stored": {
+            "btts": 67.5,
+            "avg_goals": 3.23,
+            "n": 77,
+            "nil_nil": 0.0
+          },
+          "external_finding": "League and 2026 season confirmed real (16 teams, ongoing; fbref/footystats/ESPN all cover it). External sources report ~102-147 matches already played and 54.9% BTTS season-to-date (accaplanner), with recent months at 72-75% BTTS; high-scoring character confirmed (top teams ~4.5+ total goals/game).",
+          "verdict": "INCOMPLETE",
+          "note": "Stored n=77 is a stale mid-season snapshot (~half of matches now played). Stored BTTS 67.5% vs external season-to-date 54.9% is a notable gap, but external monthly figures (72-75% in Jun/Jul) show large window-to-window swings, so this reads as snapshot/window variance rather than falsified data. Worth re-ingesting a fresh CSL snapshot; calibration for CHN1 is running on 77 of ~240 season matches."
+        },
+        {
+          "code": "EGY1",
+          "query": "Egyptian Premier League 2024-25 average goals / goal trends",
+          "stored": {
+            "btts": 39.5,
+            "avg_goals": 2.126,
+            "n": 167
+          },
+          "external_finding": "League and 2024/25 season confirmed real (18 teams; Al Ahly, Ceramica Cleopatra etc. all match stored team list). PerformanceOdds tracked 225 matches with only 36% of fixtures over 2.5 goals -- a low-scoring league, consistent with stored avg_goals 2.126.",
+          "verdict": "INCOMPLETE",
+          "note": "Scoring character CONSISTENT with independent reporting, but stored n=167 vs 225+ matches externally tracked (full 18-team season = 306). Partial-season sample, same pattern as ALG1 on 14 Jul -- candidate for re-ingestion, not a false-data case."
+        },
+        {
+          "code": "E3",
+          "query": "England League Two 2025-26 season completion / stats",
+          "stored": {
+            "btts": 52.5,
+            "avg_goals": 2.58,
+            "n": 552
+          },
+          "external_finding": "Wikipedia confirms the 2025-26 EFL League Two season (24 teams, began 2 Aug 2025, ended 25 May 2026). Stored n=552 exactly matches a full 24-team double round-robin (24x23). BTTS 52.5% and 2.58 avg goals are in the normal historical band for this division (~50% / ~2.5).",
+          "verdict": "CONSISTENT",
+          "note": "Full, completed season with exact expected match count; no discrepancies found."
         }
       ]
     }
