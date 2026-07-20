@@ -35,7 +35,7 @@ function extractJSON(text) {
 // ----------------------------------------------------------------------
 // GEMINI — raw venue-split stats researcher (with Google Search grounding)
 // ----------------------------------------------------------------------
-const GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_MODEL = 'gemini-3-flash-preview';
 
 const GEMINI_SYSTEM = `You are a football statistics research assistant. For each fixture listed, use web search to find CURRENT-season venue-split stats. Return ONLY raw numbers — NEVER a BTTS percentage, probability, prediction or verdict of any kind.
 
@@ -61,7 +61,8 @@ async function geminiFetchStats(fixtureLines, apiKey) {
     system_instruction: { parts: [{ text: GEMINI_SYSTEM }] },
     contents: [{ role: 'user', parts: [{ text: `Fixtures to research (today is ${new Date().toDateString()}):\n${fixtureLines}` }] }],
     tools: [{ google_search: {} }],
-    generationConfig: { temperature: 0.1 },
+    // Gemini 3: keep temperature at default 1.0; use thinkingLevel for depth
+    generationConfig: { thinkingConfig: { thinkingLevel: 'high' } },
   };
   const resp = await fetch(url, {
     method: 'POST',
@@ -106,7 +107,8 @@ async function geminiReadCoupon(base64Data, mimeType, apiKey) {
         { text: 'Transcribe all fixtures from this coupon image.' },
       ],
     }],
-    generationConfig: { temperature: 0 },
+    // pure transcription — no deep reasoning needed, keep it fast/cheap
+    generationConfig: { thinkingConfig: { thinkingLevel: 'minimal' } },
   };
   const resp = await fetch(url, {
     method: 'POST',
