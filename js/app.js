@@ -14,6 +14,7 @@ import {
 import {
   loadState, saveState, resetState, makeTicket, exportState, importStateFromText,
 } from './storage.js';
+import { loadAiKeys, saveAiKeys, geminiFetchStats, geminiReadCoupon, claudeReviewPicks } from './ai.js';
 
 let state = loadState();
 const picks = { btts: new Set(), pools: new Set() };
@@ -928,6 +929,160 @@ function renderReferencePanels() {
 }
 
 // ----------------------------------------------------------------------
+// AI ASSISTANTS — Gemini (stats research) + Claude (pick review).
+// Both are optional; the engine remains the only source of probabilities.
+// ----------------------------------------------------------------------
+function wireAiKeys() {
+  const gemInp = document.getElementById('ai-gemini-key');
+  const claInp = document.getElementById('ai-claude-key');
+  const msg = document.getElementById('ai-keys-msg');
+  if (!gemInp) return;
+  const keys = loadAiKeys();
+  gemInp.value = keys.gemini;
+  claInp.value = keys.claude;
+
+  document.getElementById('ai-keys-save-btn').addEventListener('click', () => {
+    saveAiKeys({ gemini: gemInp.value.trim(), claude: claInp.value.trim() });
+    msg.classList.remove('error');
+    msg.textContent = 'Saved to this browser only (never included in backups).';
+    toast('AI keys saved.');
+  });
+  document.getElementById('ai-keys-clear-btn').addEventListener('click', () => {
+    saveAiKeys({ gemini: '', claude: '' });
+    gemInp.value = ''; claInp.value = '';
+    msg.textContent = 'Keys cleared.';
+  });
+}
+
+async function runWithBusy(btn, msgEl, fn) {
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Working… (can take ~30s)';
+  msgEl.classList.remove('error');
+  msgEl.textContent = '';
+  try {
+    await fn();
+  } catch (e) {
+    msgEl.classList.add('error');
+    msgEl.textContent = e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+}
+
+function wireGeminiResearch(prefix) {
+  const btn = document.getElementById(`${prefix}-gemini-btn`);
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const msg = document.getElementById(`${prefix}-names-msg`);
+    const keys = loadAiKeys();
+    if (!keys.gemini) {
+      msg.classList.add('error');
+      msg.textContent = 'No Gemini API key saved — add one under Leagues & Settings → AI assistants.';
+      return;
+    }
+    const text = document.getElementById(`${prefix}-names-input`).value.trim();
+    if (!text) {
+      msg.classList.add('error');
+      msg.textContent = 'Paste the fixture list (| No | Home | Away |) first, then hit the Gemini button.';
+      return;
+    }
+    const rows = parseFixtureTable(text);
+    if (rows.length === 0) {
+      msg.classList.add('error');
+      msg.textContent = 'Could not read any fixtures from the pasted text.';
+      return;
+    }
+    const lines = rows.map(r => `${r.match_no ?? '?'}. ${r.home} v ${r.away}`).join('\n');
+    runWithBusy(btn, msg, async () => {
+      const result = await geminiFetchStats(lines, keys.gemini);
+      document.getElementById(`${prefix}-input`).value = JSON.stringify(result, null, 2);
+      const missing = result.matches.filter(m => m.hgf == null || m.agf == null).length;
+      msg.textContent = `Gemini returned ${result.matches.length} fixture(s)${missing ? ` (${missing} without usable stats)` : ''}. `
+        + 'REVIEW the JSON in "Paste the board" below — spot-check a couple of numbers against SoccerStats/FBref — then click "Add to board".';
+      toast('Gemini research done — review before adding.');
+    });
+  });
+}
+
+function wireCouponUpload(prefix) {
+  const input = document.getElementById(`${prefix}-coupon-img`);
+  if (!input) return;
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    input.value = '';
+    if (!file) return;
+    const msg = document.getElementById(`${prefix}-names-msg`);
+    const keys = loadAiKeys();
+    if (!keys.gemini) {
+      msg.classList.add('error');
+      msg.textContent = 'No Gemini API key saved — add one under Leagues & Settings → AI assistants.';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = String(reader.result).split(',')[1];
+      msg.classList.remove('error');
+      msg.textContent = 'Reading coupon screenshot with Gemini…';
+      try {
+        const rows = await geminiReadCoupon(base64, file.type || 'image/png', keys.gemini);
+        document.getElementById(`${prefix}-names-input`).value = rows;
+        const n = rows.split('\n').length;
+        msg.textContent = `Extracted ${n} fixture(s) from the screenshot — check the names against the coupon, then use "Auto-match & add" (or the Gemini research button for uncovered leagues).`;
+        toast(`Coupon read: ${n} fixtures extracted.`);
+      } catch (e) {
+        msg.classList.add('error');
+        msg.textContent = e.message;
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function buildReviewText(mode) {
+  const results = computedCache[mode];
+  const legs = results.filter(r => picks[mode].has(r.id));
+  if (legs.length === 0) return null;
+  const metric = mode === 'btts' ? 'P(BTTS)' : 'P(1-1)+P(2-2)';
+  const gameLabel = mode === 'btts' ? 'Goal Rush BTTS slip (need both teams to score in every leg)' : 'Classic Pools fiche (hunting score draws)';
+  const lines = legs.map(r => {
+    const P = mode === 'btts' ? r.P : r.score;
+    const flags = (r.flags || []).map(f => f[0]).join(',') || 'none';
+    return `#${r.match_no ?? '?'} ${r.fixture} — ${r.league} — engine ${metric}=${(P * 100).toFixed(1)}% — engine flags: ${flags} — verdict: ${r.drop ? 'DROP' : r.safe ? 'SAFE' : 'watch'}`;
+  }).join('\n');
+  return `Slip type: ${gameLabel}.\nPicked legs (engine output — the probabilities are final, review qualitatively only):\n${lines}`;
+}
+
+function wireClaudeReview(prefix, mode) {
+  const btn = document.getElementById(`${prefix}-review-btn`);
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const msg = document.getElementById(`${prefix}-review-msg`);
+    const out = document.getElementById(`${prefix}-review-out`);
+    const keys = loadAiKeys();
+    if (!keys.claude) {
+      msg.classList.add('error');
+      msg.textContent = 'No Claude API key saved — add one under Leagues & Settings → AI assistants.';
+      return;
+    }
+    const reviewText = buildReviewText(mode);
+    if (!reviewText) {
+      msg.classList.add('error');
+      msg.textContent = 'Pick at least one leg first.';
+      return;
+    }
+    runWithBusy(btn, msg, async () => {
+      const review = await claudeReviewPicks(reviewText, keys.claude);
+      out.classList.remove('hidden');
+      out.innerHTML = `<span class="ai-review-title">🧠 Claude's qualitative review (${new Date().toLocaleTimeString()}) — engine numbers stay final:</span>${esc(review)}`;
+      msg.textContent = 'Review done. Treat CAUTION/RECONSIDER as prompts to check the news yourself, not as new probabilities.';
+      toast('Claude review complete.');
+    });
+  });
+}
+
+// ----------------------------------------------------------------------
 // WIRE STATIC BUTTONS
 // ----------------------------------------------------------------------
 document.getElementById('btts-autopick-btn').addEventListener('click', autopickBtts);
@@ -1010,6 +1165,13 @@ wireTeamPicker('btts', 'bttsBoard', 'btts');
 wireTeamPicker('pools', 'poolsBoard', 'pools');
 wireQuickPasteNames('btts', 'bttsBoard', 'btts');
 wireQuickPasteNames('pools', 'poolsBoard', 'pools');
+wireAiKeys();
+wireGeminiResearch('btts');
+wireGeminiResearch('pools');
+wireCouponUpload('btts');
+wireCouponUpload('pools');
+wireClaudeReview('btts', 'btts');
+wireClaudeReview('pools', 'pools');
 
 renderEverything();
 initEuroData();
